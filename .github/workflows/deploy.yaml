@@ -3,7 +3,8 @@ name: Deploy
 on:
   workflow_run:
     workflows: [Build]
-    branches: [v**.**]
+    #branches: [v**.**]
+    branches: [pages]
     types: [completed]
 
 jobs:
@@ -14,6 +15,8 @@ jobs:
 
     env:
       GH_TOKEN: ${{ github.token }}
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
 
@@ -36,11 +39,10 @@ jobs:
       # artifact from another workflow to actions/deploy-pages.
       - name: Reupload as pages-artifact
         uses: actions/upload-pages-artifact@v3
+        id: deployment
         with:
             name: sed-manager-website
             path: ${{github.workspace}}/build
-            id: deployment
 
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
