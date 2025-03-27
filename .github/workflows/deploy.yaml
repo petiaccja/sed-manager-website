@@ -1,36 +1,46 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
+name: Deploy
 
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: [Build]
+    branches: [v**.**]
+    types: [completed]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
+  deploy:
     permissions:
-      contents: read
-      packages: write
+      actions: read
+      contents: write
+
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch != null }}
+
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sed-manager-website
+          path: ${{github.workspace}}/build
+          github-token: ${{github.token}}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      # Yeah, this if fucking dumb, but I don't know how to specify the
+      # artifact from another workflow to actions/deploy-pages.
+      - name: Reupload as pages-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            name: sed-manager-website
+            path: ${{github.workspace}}/build
+            id: deployment
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
