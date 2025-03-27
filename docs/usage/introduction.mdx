@@ -1,0 +1,74 @@
+# Introduction
+
+## Supported specifications
+
+| SSC          | Support      | Notes                               |
+|--------------|--------------|-------------------------------------|
+| Enterprise   | Partial      |                                     |
+| Opal         | Full         | Versions 1.0 and 2.0 both supported |
+| Opalite      | Full         |                                     |
+| Pyrite       | Full         | Versions 1.0 and 2.0 both supported |
+| Ruby         | Full         |                                     |
+| Key Per I/O  | Partial      |                                     |
+
+### Full support
+
+Opal, Opalite, Pyrite and Ruby have the same basic concepts, but offer the features at different levels. These devices are fully supported by SEDManager, and you can configure their most important features.
+
+### Enterprise devices
+
+Enterprise devices differ from the aforementioned specifications by the way they organize users. In Enterprise devices, each user is strictly assigned to a locking range, meaning the permissions users have to locking ranges is fixed. Furthermore, there are no admins and each user is allowed to configure only their own locking range. While adding full support is planned, currently, configuring Enterprise devices is limited to **discovery**, **taking ownership**, **enabling locking**, and **reverting the device**.
+
+### Key Per I/O devices
+
+Key Per I/O devices use a completely different system. While **discovery**, **taking ownership**, **enabling locking**, and **reverting the device** is supported for KPIO devices as well, there are no current plans on extending support. The KPIO specification is very new, and I haven't heard of any devices that support it.
+
+## Supported bus interfaces
+
+|             | NVMe | SCSI | ATA/SATA |
+|-------------|------|------|----------|
+| Windows     | Yes  | Yes  | Yes      |
+| Linux       | Yes  | No   | No       |
+| PBA (Linux) | Yes  | No   | No       |
+
+Mac OS and other operating systems are not supported. The pre-boot authentication environment uses Linux, so it supports the same interfaces as the Linux version.
+
+
+:::warning Untested bus interfaces
+
+On Windows, SCSI and SATA devices are also supported in theory, but the implementations are not tested. They shouldn't cause any damage, but they may not work as expected.
+
+NVMe is fully tested on both Windows and Linux.
+
+:::
+
+## List of available devices
+
+On startup, SEDManager scans the computer for available storage devices. The storage devices are grouped into three categories:
+- **Self-encryping drives**: These are shown in the first tabs for easy navigation. For SEDs, you should see detailed information about the device's encryption capabilities when navigating to the device's page.
+- **Regular drives**: These are shown in the last tabs as you won't interact with them much. While basic disk information is displayed for regular drives as well, you will see a message that the drive is not encryptable and additional information about the issue.
+- **Unavailable drives**: These are the drives SEDManager failed to open. The reasons can vary, but usually either SEDManager does not support the drive's bus interface or you are not running SEDManager with sufficient privileges. Head over to the *Unavailable devices* tab to find out about the errors that occured.
+
+:::info Refreshing device list
+
+You can manually refresh the list of devices by pressing ![Refresh](../../static/img/ui/refresh.svg). This will detect devices you just plugged in. Keep in mind that refreshing the device list will close all current sessions.
+
+:::
+
+## Identifying device capabilities
+
+On the device's starting page, you can see a detailed list of the capabilities of the device.
+
+<p align="center">
+![LockingFeatures](../../static/img/screenshots/discovery_locking_features.png)
+
+*Example: locking features supported by a device*
+</p>
+
+The most important are the **Locking features** and the features of the [SSC](link:todo) supported by the device, such as **Opal 2.0 features**. The latter allows you to figure out which, if any, TCG specifications your device supports. SSC features are always displayed on the right, while common features on the left.
+
+:::info More about capabilities
+
+Most often all you need are the **Locking features**, which are pretty self-explanatory. However, if you want to know more, you can head to [TCG's website](https://trustedcomputinggroup.org/work-groups/storage/). Click on one of the name of the SSC you want to learn more about, and open the PDF specification. Device capabilities are listed under the *Level 0 Discovery* section.
+
+:::

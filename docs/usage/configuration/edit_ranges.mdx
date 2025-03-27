@@ -1,0 +1,56 @@
+---
+description: Configure the location and locking status of LBA ranges.
+---
+
+# Editing locking ranges
+
+## What are locking ranges?
+
+Most TCG SEDs are designed around the concept of locking ranges. A locking range is a continuous LBA range of the drive. It is very similar to a partition, but eventually there is no mapping or correspondance between locking ranges and partitions. Read more about locking ranges [here](todo:link).
+
+## Settings locking range parameters
+
+SEDManager allows you to configure the following parameters for each locking range:
+- **Range start**: The logical block address (LBA) of the first block of the locking range.
+- **Range length**: Calculated from the range's start and end, but you can also change it directly.
+- **Range end**: The LBA of the last block of the locking range. The block at this address is not included in the range.
+- **Read lock enabled**: If checked, the range will get read-locked after a power cycle.
+- **Write lock enabled**: If checked, the range will get write-locked after a power cycle.
+- **Read locked**: If the range is currently locked for reading.
+- **Write locked**: If the range is currently locked for writing.
+
+:::note
+
+You can convert LBAs to bytes using the *logical block size* displayed on the device's main page under **Geometry features**.
+
+:::
+
+:::note
+
+When editing range start and end points, sometimes you won't get the exact value you typed in. This is because some drives require alignment of the locking ranges, so SEDManager automatically adjusts the values you enter to respect alignment.
+
+:::
+
+## Erasing ranges
+
+You can cryptographically erase a locking range by clicking the erase button on the range's row. This deletes the current media encryption key (MEK) and replaces it with a new one, permanently erasing all data associated with the locking range. The data cannot be recovered in any way, ever, so be careful with this function.
+
+## Potential errors
+
+### Overlapping ranges
+
+Locking ranges (except for the global range) are not allowed to overlap. If you try to set overlapping ranges, the device will give you an *invalid parameter* error. In case you're changing multiple ranges at once, a helpful trick is to first set the length of all ranges to zero, as zero-length ranges will never overlap.
+
+### Erasing ranges when encryption is not supported
+
+On some TCG Pyrite drives, encryption is not supported. In this case, erasing any range will fail, as the encryption key that would be replaced doesn't exist in the first place.
+
+## How should I configure ranges?
+
+### You're the only one using the drive
+
+You most likely want to enable locking for the global range, and leave the rest of the ranges in their default state.
+
+### You share the drive with others
+
+You can dedicate a locking range to every person. Additionally, you can also configure locking ranges that will be shared by all users. For example, you can install Linux on a read-only shared locking range, and you can put the home directories of each user on a user-specific locking range. This way, users can't access each other's data. In the following steps, you will set up permissions accordingly.

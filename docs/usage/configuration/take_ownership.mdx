@@ -1,0 +1,34 @@
+---
+description: Limit access only to the owner by changing the default owner password.
+---
+
+# Taking ownership
+
+## Replacing the default owner password
+
+Each device has a password for authenticating its owner. This password is set to a default value in the factory, and this default value can be read from the drive by software. When you take ownership of the device, you essentially change this default password to something only you know. Without changing this password, anyone could just read the default from the drive and do modifications -- not quite what you want for securely storing your data.
+
+When taking ownership of a device, SEDManager will ask you to enter the new owner password. Keep this password secret and make sure you remember it. (Ideally, not by writing it on a post-it note glued onto your screen.)
+
+:::warning A forgotten password can mean buying a new drive
+
+The owner's password is required to revert the device into its original factory state. Reverting the device may be necessary in case your lose your encryption password. In the worst-case scenario, when you lose both the owner's password and the encryption password(s), your device is essentially unusable. You cannot access your data without the encryption password, and you cannot erase your data and start anew without the owner's password, so all you can do is buy a new drive.
+
+:::
+
+:::info The physical owner's password can save you
+
+If you find yourself in the above-described worst-case scenario, you still have a backup. Most devices come with a physical owner (also known as PSID) password, which allows you to erase your data and start anew, just like the owner password. This is typically printed on the device itself or comes in a booklet with the device.
+
+:::
+
+## FAQ
+
+- **What is the owner's password for?**
+  - Enabling the locking and encryption features on the device.
+  - Reverting the device to its original factory state.
+- **Can I change the owner's password later?**
+  - Yes. It does not affect your data or encryption settings.
+  - This feature is not currently exposed by SEDManager.
+- **Is my drive encrypted after taking ownership?**
+  - No. [Keep reading](docs/usage/configuration/activate_locking.mdx).

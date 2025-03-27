@@ -1,0 +1,23 @@
+---
+description: Enable or disable MBR shadowing, and upload a PBA image.
+---
+
+# MBR shadowing
+
+## Enable shadowing feature
+
+MBR shadowing is disabled by default, even if the device supports it. Once you've enabled it, the device will show the shadow MBR instead of the locked contents after a power cycle.
+
+## Setting shadowing state
+
+Once MBR shadowing is enabled, you set if the drive is currently shadowed or not here. Generally, you won't use this toggle much, as the shadowing state is managed by the PBA environment during bootup.
+
+## Uploading a PBA image
+
+You can select a PBA image from among your files and upload it to the device's shadow MBR "partition". You don't have to use [SEDManager's PBA](https://github.com/petiaccja/sed-manager-pba/releases), SEDManager will happily upload any other PBA environment. The only requirement for mixing PBAs is that they have to use the same encoding for the passwords. SEDManager uses UTF-8 encoding for non-ASCII characters, without password hashing.
+
+:::info Why does the open file button not work?
+
+Linux has always been famous for its user friendlyness. SEDManager uses the platform's native file open dialog via [rfd](https://github.com/PolyMeilex/rfd), but those dialogs are sometimes not available when you are running as root. I recommend the good old copy pasting.
+
+:::
