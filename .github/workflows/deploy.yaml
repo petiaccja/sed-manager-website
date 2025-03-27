@@ -3,8 +3,7 @@ name: Deploy
 on:
   workflow_run:
     workflows: [Build]
-    #branches: [v**.**]
-    branches: [pages]
+    branches: [v**.**]
     types: [completed]
 
 jobs:
