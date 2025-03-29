@@ -4,3 +4,26 @@ description: Revert the device to its original factory state.
 
 # Reverting a device
 
+## Reverting locking or the whole device
+
+When reverting the device, you have two options:
+- Revert the locking features: This options erases all data, resets all locking configurations (i.e. locking ranges, users, permission, shadow MBR) to its factory defaults, and then disables the locking features.
+- Revert the whole device: This option reverts both the locking (as described above) and the administrative configuration, so basically everything. In addition to erasing data and reverting the locking configuration, it also reverts the owner's password and any changes done on the Admin SP.
+
+:::tip Reselling your drive
+
+If you want to sell your used drive, revert the whole device. This will make sure your data is not accessible to the new owner.
+
+:::
+
+:::warning Reselling unencrypted drives
+
+If you haven't encrypted your drive, but you want to resell it, you should first [activate locking](./activate_locking.mdx), manually erase the global range (optional), and then revert the whole device. (Reverting on its own erases the global range, but erasing it manually makes sure you haven't made any mistakes.)
+
+:::
+
+## Reverting as the owner or as PSID
+
+You have two options:
+- *Authenticate as the owner*: In this case, you will need your owner's password. This gives you the choice of reverting either the locking configuration or the whole device.
+- *Authenticate as physical owner (PSID): In this case, you will need your PSID password, which is typically printed on the device's label. Since you would typically use this method if you forgot your owner's password, your only option is to revert the entire device, which allows you to set a new owner's password.

@@ -1,0 +1,24 @@
+# Self-encrypting drives
+
+## Modern storage devices
+
+Modern hard disk drives (HDDs) and solid state drives (SSDs) store data as a big contiguous range of blocks. Block sizes vary, but they are typically 512 bytes, so a 1 TB hard drive would have 1.95 billion of these blocks. When writing a file to disk, the SSD firmware selects enough blocks to fit the file. The selected blocks must also be free so that other important data does not get overwritten. Once the blocks have been selected, the file is written there as-is. Later, the file can be read out from those blocks, but without encryption, everybody can read all files from the storage device.
+
+## Symmetric encryption
+
+Symmetric encryption is a mathemtical formula that takes a piece of data, such as one block stored on an SSD, and a password, and combines the data with the password in such a way that the result is gibberish. The mathematical formula is reversible, meaning it can take the gibberish it just generated, combine it with the original password, and turn it back into the original data. This way, one can encrypt a piece of data and make it inaccessible to everyone else, but with the password, they can still read it.
+
+## Encryption of data in practice
+
+There are three common ways to apply symmetric encryption to data:
+- **At the file level**: This means that before being written to the disk, an individual file is split into blocks, then the blocks are encrypted with a password, and then the encrypted blocks of the file are written to the disk. The encryption happens purely in software, sometimes independently of the operating system. An example would be encrypted `.zip` or `.7z` archives.
+- **At the volume level** (sofware encryption): Instead of encrypting individual files, the entire partition -- including the master file table -- is encrypted. This is still done in software, often by the operating system or its drivers. The encrypted blocks are then written to the disk. Examples are VeraCrypt, LUKS, or BitLocker.
+- **At the drive level** (hardware encryption): Every block of the drive is encrypted, including all partitions, the MBR or the EFI partition, and the partition table itself. The data is written to the disk without encryption, and the encryption is performed by the disk's firmware just before the data is written to the permanent storage (i.e. NAND flash or magnetic disk). The encryption process is invisible to the operating system or software running on it.
+
+SEDManager is only concerned with the last one: hardware encryption. Keep in mind that just because hardware encryption encrypts more, it's not necessarily superior. All three methods have their pros and cons, and can be the best choice for certain applications.
+
+## Hardware encryption
+
+Drives that support hardware enryption or referred to as self-encrypting drives (SEDs). Since encryption is independent from the operating system and other software, you have to configure SEDs by issuing commands to the SED's firmware -- which is what SEDManager does. Once configured, the actual encryption is handled by the drive's firmware.
+
+There is currently one reasonably widespread specification that describes what firmware commands the drive should process and how it should encrypt the data. This [specification](https://trustedcomputinggroup.org/work-groups/storage/) was created by the Trusted Computing Group (TCG), and contains several sub-specifications (such as **Opal**) that storage devices can comply with. SEDManager can configure drives that comply with any of the TCG specifications.

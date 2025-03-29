@@ -1,1 +1,11 @@
 # Troubleshooting
+
+## Stack reset
+
+Sometimes, the device's protocol stack gets desynchronized from SEDManager's. This results in broken communication between the two, and you will receive error messages like NVMe protocol violation or "security provider busy". This can happen if you forcefully terminate SEDManager in the middle of a session, your OS BSODs, or due to a bug in SEDManager or the device.
+
+Stack reset is your magic button to get things back to normal. It tells the device to abort all sessions and reset its communication protocol stack. Afterwards, SEDManager will be able to reestablish connection.
+
+## Unruly devices
+
+Some devices don't implement the TCG specification properly. For example, the Corsair MP600 PRO XT reports that it support Pyrite 1.0 without hardware encryption, but it never answers to protocol commands so SEDManager's requests just time out. There is not much you can do with these drives.

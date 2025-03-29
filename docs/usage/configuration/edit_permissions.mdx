@@ -4,25 +4,23 @@ description: Give users permission to unshadow the MBR and unlock locking ranges
 
 # Editing permissions
 
-## Configurable permissions
+## Permissions you can set
 
-SEDManager allows you to configure the following permissions:
-- **Unshadow MBR**: When checked, the user can unshadow the MBR, revealing the (still encrypted) contents of the drive.
-- **Read unlock a range**: The selected user can clear read protection on the particular locking range.
-- **Write unlock a range**: Same, but for write protection.
+- **Unshadow MBR**: When checked, the user can [unshadow the MBR](../../background/tcg_specs.mdx#booting-from-encrypted-drives), revealing the (still encrypted) contents of the drive.
+- **Read unlock a range**: The selected user can disable read protection on the locking range, making its contents readable.
+- **Write unlock a range**: Disable write protection, making the locking range writable.
 
-## Configurable users
+## Users listed on the page
 
-On the user select dropdown, you can spot a new user called *Users* that you haven't seen while setting up users. This is a user group that contains User1, User2, and the rest of the users. Giving permission to the *Users* group is the same as giving permission to *all* users.
+### *Users* authority
 
-The admins are missing from this page, because they have access to everything so there is nothing to configure. There exists a group for admins as well, but the *Admins* group is also missing from this page.
+The *Users* authority is a group that includes all users. Giving permission to the *Users* authority means every *User* has that permission too.
+
+### Admins
+
+Admin always have all the permissions, so there is nothing you can configure on them. Consequently, they are not shown on the permissions page.
 
 ## How should I configure permissions?
 
-### You're the only one using the drive
-
-Just give *User1* -- that you previously configured on the users page -- permission to the global range and to unshadow the MBR.
-
-### You're sharing the drive with others
-
-Give each user access to their own locking range, and possibly to shared locking ranges. In most cases, you can allow all users to unshadow the MBR either by enabling it for each user separately or by enabling it for the *Users* group.
+- **You're the only one using the drive**: Give *User1* (that you've previously enabled) permission to unshadow the MBR and to read-write unlock the global range.
+- **You're sharing the drive with others**: Give each user access to their own locking range and to any shared ranges you've set up. typically, you can allow all users to unshadow the MBR. You can do this by allowing unshadowing for the *Users* group.

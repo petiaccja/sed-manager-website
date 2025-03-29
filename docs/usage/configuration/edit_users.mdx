@@ -6,51 +6,46 @@ description: Add and remove users; set usernames and passwords.
 
 ## Admins and users
 
-Most TCG devices come with a set of admins and users. (Enterprise devices have neither, while KPIO devices have only admins.) By default, only Admin1 is enabled, and it also cannot be disabled. The rest of the admins and users can be enabled or disabled at will. While SEDManager lets you configure all admins, it never actually uses them aside from Admin1. Admins are used for configuring locking ranges, users, and permissions, whereas users are used for unlocking one or more locking ranges during everyday use.
+In connection with locking, you will see two kinds of [authorities](../../background/tcg_specs.mdx#authorities):
+- Admins: They have full access to changing the configuration and can unlock all locking ranges.
+- Users: They can be given permission to unlock one or more locking ranges.
 
-## Setting user parameters
+The Admin1 authority cannot be disabled, while the rest of the Admins can be enabled or disabled as you like. Since SEDManager does not use any of the other Admin authorities, it's recommended that you keep them disabled. Users can also be enabled or disabled as you like. Don't enable Users unless you're actually using them.
 
-SEDManager lets you configure the following parameters:
+## User parameters
+
+You can configure the following parameters for each Admin or User:
 - **Enabled**: When set to false, the user cannot be authenticated, even if the correct password is provided.
-- **Name**: The name field can be purely informational (e.g. John Doe), but the PBA environment also makes it possible to use it for authentication, so you might want to set the names to unique usernames (e.g. john_doe). The names don't serve any other purpose, and you can always authenticate as *User1* instead of *john_doe*.
+- **Name**: You can set an informational name (e.g. *John Doe*), a unique username (e.g. *john_doe*), or leave it blank. In the PBA environment, you can log in using either the name given here (*john_doe*) or the canonical name (*User1*).
 - **Password**: Changes the password that the user authenticates with.
 
-:::info Changing Admin1's password
+:::warning Changing Admin1's password
 
-The user configuration panel allows you to change any user's password, including the password of Admin1. Be aware that the Admin1 listed here is the same Admin1 you used to enter this configuration page, so don't accidentally lock yourself out by carelessly changing the password.
+This page allows you to change the password of Admin1. Be aware that the Admin1 listed here is the same Admin1 you used to enter this configuration page, so you can easily lock yourself out if you carelessly change the password.
 
 :::
 
-## How should I configure users?
-
-### You're the only one using the drive
-
-Just enable User1, set a username (e.g. john_doe), and set a password. You can reuse the owner's password again, just like you can reuse it for the Admin1 password. It doesn't matter since you're the only one with access to the drive.
-
-### You're sharing the drive with others
-
-Enable one UserN for each person using the drive, set their usernames (e.g. alice_92, bob_the_douche, chaplin_c), and set a default password for them. Each user's password should be unique and different from both the Admin1 and the owner's password.
-
-:::info Changing passwords
+:::info Changing User passwords
 
 Currently, this is the only page where you can change passwords. Support is planned for users to change their own password, but, for now, you have to open this page and ask them to enter their new password while looking away.
 
 :::
 
-## Format of passwords and names
+## How should I configure users?
 
-### Non-english characters
+- **You're the only one using the drive**: Enable User1, set a username (e.g. john_doe), and set a password. Reusing the owner's password has a very small effect on overall security, so it's fine to do so.
+- **You're sharing the drive with others**: Enable one User for each person using the drive, set their usernames (e.g. alice_92, bob_76), and set a default password for them. Each user's password should be unique and different from both the Admin1 and the owner's password. If the owner also has a User, you can reuse the owner's password for that User.
 
-It depends on the device whether it supports any character, or just the English alphabet plus numbers. In case the device does not support non-English characters, you should see an error message if you try to enter such a name or password. SEDManager supports all characters and alphabets.
+## Name and password limitations
 
-### Name and password length
+### Maximum 32 characters
 
-Names and passwords are limited to at most 32 characters. If you enter a longer one, you should get an error message. Non-English characters may account for up to 4 characters towards the 32-character limit.
+Names and passwords must be no more than 32 characters, a limitation imposed by the TCG specifications. Entering a longer password will result in an error message. Non-English characters may account for up to 4 characters.
 
-### UTF-8 encoding
+### Alphabets
 
-SEDManager uses UTF-8 to encode both names and passwords. This is only relevant if you use non-ASCII characters and if you use other tools alongside SEDManager. SEDManager will always display names that were set in SEDManager correctly, and the same goes for passwords.
+It's up to the device to support non-Latin characters. In case the value you entered is not supported, you will receive an error message. While SEDManager fully supports non-Latin characters, the PBA environment uses the US-English keyboard layout, so you may have trouble entering such passwords and usernames in the PBA.
 
-### Keyboard layouts
+### Characters are encoded as UTF-8
 
-The PBA environment uses the US English keyboard layout, so it's best if your passwords and usernames can be easily types with that.
+SEDManager uses UTF-8 to encode both names and passwords. This may be important information if you intend to use other tools alongside SEDManager, and your usernames and passwords contain non-ASCII characters.
