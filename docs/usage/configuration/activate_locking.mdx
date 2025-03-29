@@ -1,16 +1,19 @@
 ---
-description: Activating the locking features available on the device.
+description: Enables the locking features of the device.
 ---
 
 # Activating locking
 
-So you've [set your owner's password](docs/usage/configuration/take_ownership.mdx). That means your data is protected and encrypted, right? **No!** The next step in the process to activate the locking feature of your drive.
-
-When activating locking, SEDManager will ask you for your owner password, and, optionally, you can enter an admin password as well. You can also chose to just used the owner password as the admin password as well. (Later you can change the two password independently, even if they are initially the same.) The admin password will be used in the subsequent steps to configure everything related to locking and encryption.
-
-Feel free to reuse your owner password as the admin password, it's not a security risk if you're the only one using the drive anyway. If there are multiple people with different permissions to the device, then configuring a separate password can be a good idea.
-
 ## What does activation do?
 
-Activating locking merely enables the locking features of the device and configures a password for an admin authority that can manage the settings related to locking and data encryption. Activating locking alone does not protect your data.
+Activating locking enables the [Locking SP](../../background/tcg_specs.mdx#security-providers), which makes the locking and encryption features of the device available. This is also a single step process, and you will need the owner's password you have just set, as well as provide a new password for the administrator authority that will manage locking and encryption features from now on.
 
+## The Admin1 password
+
+SEDManager gives you the option to reuse your owner's password as the locking admin password. You can use this option for simplicity in case you're the only user of the drive or you will be the only one managing the device's configuration. There is very little safety concern in reusing the password, and you can change both password independently afterwards.
+
+:::warning Data loss
+
+Enabling locking will not erase your data, but later disabling it will. While you can just leave locking on, it's not recommended unless you are using it, so make sure you really want to enable locking or prepare to back your data up when you disable it.
+
+:::

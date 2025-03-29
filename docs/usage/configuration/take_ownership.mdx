@@ -1,34 +1,27 @@
 ---
-description: Limit access only to the owner by changing the default owner password.
+description: Ensures you alone have authority over the device's configuration.
 ---
 
 # Taking ownership
 
-## Replacing the default owner password
+## Setting the owner's password
 
-Each device has a password for authenticating its owner. This password is set to a default value in the factory, and this default value can be read from the drive by software. When you take ownership of the device, you essentially change this default password to something only you know. Without changing this password, anyone could just read the default from the drive and do modifications -- not quite what you want for securely storing your data.
+The [owner authority](../..//background/tcg_specs.mdx#authorities) comes with a factory-configured default password. Taking ownership of the device is a single step to change the owner's password to something only you know.
 
-When taking ownership of a device, SEDManager will ask you to enter the new owner password. Keep this password secret and make sure you remember it. (Ideally, not by writing it on a post-it note glued onto your screen.)
+The owner has the authority to:
+- Enable and disable the locking features
+- Revert the device to factory defaults
 
-:::warning A forgotten password can mean buying a new drive
+While it's not possible to access encrypted data even if you have the owner's password, changing it ensures that people don't tamper with the device.
 
-The owner's password is required to revert the device into its original factory state. Reverting the device may be necessary in case your lose your encryption password. In the worst-case scenario, when you lose both the owner's password and the encryption password(s), your device is essentially unusable. You cannot access your data without the encryption password, and you cannot erase your data and start anew without the owner's password, so all you can do is buy a new drive.
+:::info PSID revert
 
-:::
-
-:::info The physical owner's password can save you
-
-If you find yourself in the above-described worst-case scenario, you still have a backup. Most devices come with a physical owner (also known as PSID) password, which allows you to erase your data and start anew, just like the owner password. This is typically printed on the device itself or comes in a booklet with the device.
+Should you lose your owner's password, you can still revert the device using the *PSID password*, which you typically find printed onto the device's label or inside a booklet that came in the package.
 
 :::
 
-## FAQ
+:::warning Don't brick your device
 
-- **What is the owner's password for?**
-  - Enabling the locking and encryption features on the device.
-  - Reverting the device to its original factory state.
-- **Can I change the owner's password later?**
-  - Yes. It does not affect your data or encryption settings.
-  - This feature is not currently exposed by SEDManager.
-- **Is my drive encrypted after taking ownership?**
-  - No. [Keep reading](docs/usage/configuration/activate_locking.mdx).
+If you lose both your owner's password and your PSID password, there is no way to revert your drive and set a new owner's password, though you can still access your data. If you also lose your encryption password, your device becomes unusable and you have to buy a new one.
+
+:::

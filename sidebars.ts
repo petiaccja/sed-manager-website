@@ -4,8 +4,8 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   introToSEDs: [
-    'sed/fde',
-    'sed/standards',
+    'background/seds',
+    'background/tcg_specs',
   ],
   usingSEDManager: [
     'usage/introduction',
