@@ -1,0 +1,40 @@
+.dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--ifm-color-content);
+    margin: 0 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-width: 0px;
+}
+
+.dot:hover {
+    background-color: #888;
+}
+
+.activeDot {
+    background-color: var(--ifm-color-primary);
+    width: 16px;
+    height: 16px;
+}
+
+.carouselButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.carouselSlide {
+    height: auto;
+}
+
+.carouselSlide img {
+    max-width: 100%;
+    height: auto;
+}
+
+.carouselContainer {
+    margin: 1rem;
+}
