@@ -29,6 +29,8 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
         },
+        pages: {
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -55,6 +57,11 @@ const config: Config = {
           sidebarId: 'usingSEDManager',
           position: 'left',
           label: 'Usage',
+        },
+        {
+          to: 'screenshots',
+          position: 'left',
+          label: 'Screenshots',
         },
         {
           href: 'https://github.com/petiaccja/sed-manager-rs/releases',
