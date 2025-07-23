@@ -10,7 +10,7 @@ const config: Config = {
   favicon: 'img/logo.ico',
 
   url: 'https://petiaccja.github.io',
-  baseUrl: '/sed-manager-website',
+  baseUrl: '/',
   organizationName: 'petiaccja',
   projectName: 'sed-manager-website',
 
