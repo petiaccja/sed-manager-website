@@ -9,7 +9,7 @@ const config: Config = {
   tagline: 'Manage your self-encrypting drives',
   favicon: 'img/logo.ico',
 
-  url: 'https://petiaccja.github.io',
+  url: 'https://sedmanager.app',
   baseUrl: '/',
   organizationName: 'petiaccja',
   projectName: 'sed-manager-website',
