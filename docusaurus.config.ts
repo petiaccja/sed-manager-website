@@ -64,14 +64,9 @@ const config: Config = {
           label: 'Screenshots',
         },
         {
-          href: 'https://github.com/petiaccja/sed-manager-rs/releases',
-          label: 'Install',
+          to: 'downloads',
           position: 'left',
-        },
-        {
-          href: 'https://github.com/petiaccja/sed-manager-pba/releases',
-          label: 'PBA',
-          position: 'left',
+          label: 'Downloads',
         },
         {
           href: 'https://github.com/petiaccja/sed-manager-rs',

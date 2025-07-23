@@ -24,7 +24,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         SEDManager's graphical user interface is easy to use and intuitive,
-        so you can configure your drives in just a few minutes
+        so you can configure your drives in just a few minutes.
       </>
     ),
   },
@@ -33,7 +33,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         SEDManager's Alpine Linux-based PBA environment allows you to unlock
-        your drives with a password before booting the operating system
+        your drives with a password before booting the operating system.
       </>
     ),
   },

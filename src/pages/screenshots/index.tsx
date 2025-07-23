@@ -89,7 +89,7 @@ export default function Screenshots() {
     ];
 
     return (
-        <Layout title={`Screenshots`} description="Description will go into a meta tag in <head />">
+        <Layout title={`Screenshots`} description="Screenshots of SEDManager's UI">
             <main>
                 <Carousel screenshots={screenshots} />
             </main>

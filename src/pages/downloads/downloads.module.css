@@ -1,0 +1,8 @@
+.downloadButton {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 100px;
+    border-width: 0px;
+    background-color: var(--ifm-color-primary);
+    color: var(--ifm-color-content-inverse);
+}
