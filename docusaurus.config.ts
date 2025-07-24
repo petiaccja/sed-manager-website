@@ -76,6 +76,11 @@ const config: Config = {
           label: 'Screenshots',
         },
         {
+          to: 'pricing',
+          position: 'left',
+          label: 'Pricing',
+        },
+        {
           to: 'downloads',
           position: 'left',
           label: 'Downloads',
