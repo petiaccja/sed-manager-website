@@ -33,7 +33,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`Home`}
-      description="Description will go into a meta tag in <head />">
+      description="Get started with configuring your self-encrypting drives">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

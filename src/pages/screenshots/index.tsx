@@ -89,7 +89,7 @@ export default function Screenshots() {
     ];
 
     return (
-        <Layout title={`Screenshots`} description="Screenshots of SEDManager's UI">
+        <Layout title={`Screenshots`} description="Screenshots of the application">
             <main>
                 <Carousel screenshots={screenshots} />
             </main>

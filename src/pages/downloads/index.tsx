@@ -6,7 +6,7 @@ import BalanceIcon from '@site/static/img/ui/balance.svg';
 
 export default function Download() {
     return (
-        <Layout title={`Downloads`} description="Links to download SEDManager's binaries">
+        <Layout title={`Downloads`} description="Download precompiled executables and PBA images">
             <main style={{ maxWidth: '960px', margin: '0 auto' }}>
                 <h1>
                     <DownloadIcon style={{ marginRight: '0.3em', fill: "currentColor" }} />
