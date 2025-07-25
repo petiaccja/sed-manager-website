@@ -62,7 +62,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'introToSEDs',
           position: 'left',
-          label: 'Background',
+          label: 'Overview',
         },
         {
           type: 'docSidebar',
