@@ -22,13 +22,13 @@ export default function Pricing() {
                             <td><center><b>Encrypting data</b></center></td>
                             <td>Free</td>
                             <td>Free</td>
-                            <td>Contact me</td>
+                            <td><Link to="mailto:license@sedmanager.app">Contact me</Link></td>
                         </tr>
                         <tr>
                             <td><center><b>Testing & reviewing drives</b></center></td>
                             <td>Free</td>
                             <td>No</td>
-                            <td>Contact me</td>
+                            <td><Link to="mailto:license@sedmanager.app">Contact me</Link></td>
                         </tr>
                         <tr>
                             <td><center><b>Source code available</b></center></td>
