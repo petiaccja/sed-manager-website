@@ -4,7 +4,6 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
-import DownloadIcon from '@site/static/img/ui/download.svg';
 
 import styles from './index.module.css';
 import Link from '@docusaurus/Link';
@@ -18,10 +17,15 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/downloads">
-            <DownloadIcon style={{ marginRight: '0.3em', fill: "currentColor", verticalAlign: "middle" }}></DownloadIcon>
-            Download SEDManager
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Link className="button button--secondary button--lg" to="/downloads" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
+            ⬇️ Download
+          </Link>
+          <Link className="button button--secondary button--lg" to="/docs/overview/seds" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
+            📖 Learn about SEDs
+          </Link>
+          <Link className="button button--secondary button--lg" to="/docs/usage/introduction" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
+            📝 Set up your drive
           </Link>
         </div>
       </div>
