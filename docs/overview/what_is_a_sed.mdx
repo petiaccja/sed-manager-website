@@ -1,4 +1,25 @@
-# Self-encrypting drives
+# What's a self-encrypting drive?
+
+A **self-encrypting drive** (**SED**) is simply a storage device (e.g. HDD, SSD) that has encryption capabilities built into its firmware, and thus supports **hardware encryption**. To understand how it works, let's try to build one.
+
+## Block devices
+
+Modern computer storage devices organize their medium into blocks. A block is typically 512 bytes, but other formats also exist. For example, with 512-byte blocks, a 1 MiB hard drive would be split into 2048 blocks.
+
+Consequently, when files are written onto the storage device, the files also have to be split into blocks. For example, an 1700-byte file would occupy four blocks. Since four blocks provide space for 2048 bytes in total, an 1700 byte file will leave 348 bytes of wasted space at the end of the fourth block.
+
+We can visualize this as four occupied blocks, preceded and followed by a long sequence of blocks that are empty space or store other files:
+
+![Block device layout](/img/illustrations/docs/overview/block_device_layout_light.svg#gh-light-mode-only)
+![Block device layout](/img/illustrations/docs/overview/block_device_layout_dark.svg#gh-dark-mode-only)
+
+## The media encryption key (MEK)
+
+Conveniently enough, the block organization of storage devices is very similar to the block ciphers we've introduced in the previous chapter. While the block sizes for the storage device and the symmetric encryption algorithm may be different, let's just assume for simplicity that they are the same.
+
+In that case, all we have to do is pick a password, which we'll call the *media encryption key* (MEK), and use that password to encrypt each block of the storage device:
+
+---
 
 ## Modern storage devices
 

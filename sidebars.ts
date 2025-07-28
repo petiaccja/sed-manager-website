@@ -4,8 +4,9 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   introToSEDs: [
-    'overview/seds',
-    'overview/tcg_specs',
+    'overview/how_does_encryption_work',
+    'overview/what_is_a_sed',
+    'overview/the_tcg_spec',
   ],
   usingSEDManager: [
     'usage/introduction',
