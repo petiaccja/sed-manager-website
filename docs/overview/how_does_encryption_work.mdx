@@ -5,7 +5,7 @@
 ![Symmetric encryption process](/img/illustrations/docs/overview/symmetric_encryption_light.svg#gh-light-mode-only)
 ![Symmetric encryption process](/img/illustrations/docs/overview/symmetric_encryption_dark.svg#gh-dark-mode-only)
 
-Symmetric encryption algorithms are the foundation of data encryption. They are essentially mathematical operators that take a password (also knows as *key*) and a piece of data, and combine them to produce *ciphertext*. Based only on the ciphertext, it's impossible to guess what the original data was, so in ciphertext form, the data is safe from prying eyes. These algorithms are called symmetric because they are reversible. In the decryption procedure, the password is combined with the ciphertext by a similar mathematical operator, and it gives back the original piece of data. As you've already guessed, you can execute the decryption with the wrong password, but it won't give you back the original data, it will give you only gibberish.
+Symmetric encryption algorithms are the foundation of data encryption. They are essentially mathematical operators that take a password (also known as *key*) and a piece of data, and combine them to produce *ciphertext*. Based only on the ciphertext, it's impossible to guess what the original data was, so in ciphertext form, the data is safe from prying eyes. These algorithms are called symmetric because they are reversible. In the decryption procedure, the password is combined with the ciphertext by a similar mathematical operator, and it gives back the original piece of data. As you've already guessed, you can execute the decryption with the wrong password, but it won't give you back the original data, it will give you only gibberish.
 
 The most commonly used algorithms in software and hardware encryption tools are [AES-128 and AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).
 
@@ -16,13 +16,13 @@ In the aforementioned algorithms, the key is 128 bit or 256 bit long, while the 
 ![Block cipher](/img/illustrations/docs/overview/block_cipher_light.svg#gh-light-mode-only)
 ![Block cipher](/img/illustrations/docs/overview/block_cipher_dark.svg#gh-dark-mode-only)
 
-The simplest option is to independently encrypt each piece of data using the same password, however, such simple approaches can have vulnerabilities. In practice, encryption software or firmware uses more [advanced schemes](https://en.wikipedia.org/wiki/Disk_encryption_theory#Block_cipher-based_modes) to chain the blocks.
+The simplest option is to independently encrypt each piece of data using the same password, but such simple approaches can have vulnerabilities. In practice, encryption software or firmware uses more [advanced schemes](https://en.wikipedia.org/wiki/Disk_encryption_theory#Block_cipher-based_modes) to chain the blocks.
 
 ## Approaches to encrypting a computer
 
 Imagine you are editing a confidential business contract in Microsoft Word. What happens when you save this file?
 1. First, Word assembles the content of the `.docx` file that will be written to disk, which is just a blob of data.
-2. Second, Word passes this blob of data to the filesystem driver, which finds a suitable spot on the file system and edits the file system's bookeeping data.
+2. Second, Word passes this blob of data to the filesystem driver, which finds a suitable spot on the file system and edits the file system's bookkeeping data.
 3. Since the file system resides on a partition, rather than a raw disk, the write has to pass through the volume management components of the OS.
 4. Once the address within the partition has been translated to an address on raw disk, the write command is passed onto the device driver.
 5. Finally, the firmware of the device receives the write command with the data blob, maps the LBA to a physical sector, and burns the bytes onto the physical medium.
@@ -40,9 +40,9 @@ Though there are several examples of this, such as encrypted archives by 7-Zip, 
 
 ### Encrypted file systems
 
-Another approach is to put the encryption capabilities into the file system driver. This could be implemented by the file system keeping the bookkeping data unencrypted, but encrypting the contents of each file, though other options are also possible depending on the file system.
+Another approach is to put the encryption capabilities into the file system driver. This could be implemented by the file system keeping the bookkeeping data unencrypted, but encrypting the contents of each file, though other options are also possible depending on the file system.
 
-An example for a file system that supports encryption is ZFS. The main drawback of this approach is that not everything is encrypted, like with volume- and hardware-based encryption.
+An example of a file system that supports encryption is ZFS. The main drawback of this approach is that not everything is encrypted, like with volume- and hardware-based encryption.
 
 ### Volume-based encryption
 
@@ -54,9 +54,9 @@ Like with all previous methods, the data is encrypted by some software running u
 
 When it comes to hardware encryption, the code that performs the encryption is not running under the operating system. Instead, the encryption is performed by the storage device's (*hardware's*) firmware, which runs on embedded processors soldered onto the storage device's circuits. Consequently, this method is often referred to as **hardware encryption**.
 
-Unlike volume-based encryption which encrypt individual partitions, hardware-based encryption encrypt the entire physical medium. This includes all partitions, the empty space between partitions, and even the partition table and the bootloader.
+Unlike volume-based encryption which encrypts individual partitions, hardware-based encryption encrypts the entire physical medium. This includes all partitions, the empty space between partitions, and even the partition table and the bootloader.
 
-## Which approach should I chose?
+## Which approach should I choose?
 
 Typically, you'll only be interested in volume-based software encryption and hardware encryption. File and file system encryption have more niche uses.
 
@@ -68,6 +68,6 @@ Typically, you'll only be interested in volume-based software encryption and har
 
 The above table highlights some differences between the two approaches, but is not really comprehensive, and if you really care, you should look up detailed information about attacks against both methods. For average Joes and Janes, probably both are fine.
 
-Due to the recently discovered security flaws in SSD manufacturer's hardware encryption solutions, it may be a better choice to go for software encryption if you want maximum security. On the other hand, hardware encryption has zero impact on your CPU, giving you superior performance, and it's also not vulnerable to cold boot attacks and tampering with the bootloader.
+Due to the recently discovered security flaws in SSD manufacturers' hardware encryption solutions, it may be a better choice to go for software encryption if you want maximum security. On the other hand, hardware encryption has zero impact on your CPU, giving you superior performance, and it's also not vulnerable to cold boot attacks and tampering with the bootloader.
 
 **SEDManager is a solution for hardware encryption**, and the rest of the documentation focuses on that alone.
