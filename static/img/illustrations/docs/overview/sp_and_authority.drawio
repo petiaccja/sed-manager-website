@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0" version="28.0.7">
+  <diagram name="Page-1" id="k4GcpGOkl8iZqsxu9mtx">
+    <mxGraphModel dx="1426" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-5" value="Storage device" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="500" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-1" value="Security provider #1" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-5">
+          <mxGeometry x="20" y="50" width="220" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-2" value="Authority #1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-1">
+          <mxGeometry x="30" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-7" value="Configuration" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.multi-document;whiteSpace=wrap;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-1">
+          <mxGeometry x="66" y="50" width="88" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-3" value="Security provider #2" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-5">
+          <mxGeometry x="260" y="50" width="220" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-4" value="Authority #1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-3">
+          <mxGeometry x="40" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-10" value="Authority #2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-3">
+          <mxGeometry x="150" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-8" value="Configuration" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.multi-document;whiteSpace=wrap;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-3">
+          <mxGeometry x="66" y="50" width="88" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-11" value="Opal 2.0 device" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="500" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-12" value="Admin SP" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-11">
+          <mxGeometry x="20" y="50" width="220" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-13" value="SID" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-12">
+          <mxGeometry x="30" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-14" value="Device state" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.multi-document;whiteSpace=wrap;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-12">
+          <mxGeometry x="60" y="50" width="94" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-21" value="PSID" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-12">
+          <mxGeometry x="95" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-22" value="Admin1..4" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-12">
+          <mxGeometry x="160" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-15" value="Locking SP" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-11">
+          <mxGeometry x="260" y="50" width="220" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-16" value="Admin1..4" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-15">
+          <mxGeometry x="40" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-17" value="User1..8" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-15">
+          <mxGeometry x="150" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Y_EBVTKgXtlYADQYtajF-18" value="Locking ranges&lt;br&gt;Shadow MBR" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.multi-document;whiteSpace=wrap;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="Y_EBVTKgXtlYADQYtajF-15">
+          <mxGeometry x="53" y="50" width="114" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

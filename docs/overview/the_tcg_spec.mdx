@@ -1,5 +1,89 @@
 # The TCG storage specification
 
+In the previous chapter, we've discussed "special commands" that are sent to the storage device to configure its firmware for encryption. Imagine if every manufacturer came up with their own special commands? That would be a nightmare, so luckily, the [Trusted Computing Group](https://trustedcomputinggroup.org/) has developed a [specification](https://trustedcomputinggroup.org/work-groups/storage/) for these special commands that storage device manufacturers can implement.
+
+Since this seems to be the only widespread specification, this is what SEDManager supports. While it's not necessary to have a deep understanding of it, this document explains the basics so that you actually understand what's going on while configuring your drive.
+
+## An overview of the specification
+
+### The core specification
+
+The specification is organized into a [*core specification*](https://trustedcomputinggroup.org/resource/tcg-storage-architecture-core-specification/) that defines the architecture of that the encryption features build upon. The core specification alone is not suitable for developing storage devices, as it's both too complex and leaves certain areas uncovered.
+
+### Security subsystem classes
+
+In addition to the core specification, there are several *security subsystem classes* (SSCs). The SSCs supplement the core specification by specifying which parts of it are mandatory to implement, and by adding missing details. Together with the core specification, they can be used to develop actual storage devices.
+
+Currently, there are six SSCs:
+- Opal (version 1.0 & 2.0)
+- Opalite
+- Pyrite (version 1.0 & 2.0)
+- Ruby
+- Enterprise
+- Key per I/O
+
+### Feature sets
+
+Finally, there are also independent feature sets which a device can optionally support. Some feature sets are mandatory for certain SSCs. 
+
+Examples include:
+- Block SID authentication
+- Additional DataStore tables
+
+## The core specification
+
+The core specification defines how the "special messages" used to configure the firmware are encoded. Furthermore, it also defines how the configuration of the firmware is organized, and how it can modified via special messages. These details are only relevant if you're developing software that interacts with TCG SEDs.
+
+What's more important is the concept of *security providers* (SPs) and *authorities*:
+
+![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_light.svg#gh-light-mode-only)
+![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_dark.svg#gh-dark-mode-only)
+
+### Security providers
+
+Each device contains one or more security providers. SPs act as a group for related functionality and store related configuration. Additionally, each SP contains one or more authorities.
+
+### Authorities
+
+Authorities represent individuals, like users, admins, or owners. Authorities can have permissions to perform certain actions (e.g. erase the drive, change password), and the permissions can often be changed during the provisioning of the device.
+
+### Configuration
+
+The configuration stored within security providers can vary, but one example would be the permissions the authorities have. Access to reading or writing the configuration is also controlled, and not all authorities can see or change them.
+
+## Security subsystem classes
+
+### The Opal, Opalite, Pyrite, and Ruby SSCs
+
+These four SSCs are rather similar, and have the following organization:
+
+![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_light.svg#gh-light-mode-only)
+![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_dark.svg#gh-dark-mode-only)
+
+The main difference between them is the different number of User and Admin authorities they support, and how they handle encryption.
+
+The meaning of the security providers and the authorities:
+- The **Admin SP** provides functionality for managing drive-wide configuration. This roughly boils down to protecting the administrative settings by a password, enabling the Locking SP, and reverting the device to factory defaults.
+  - The **SID** authority, also known as the *owner* authority, has primary control over the settings in the Admin SP, as well as the authorization to perform the Admin SP action mentioned above.
+  - The **PSID** authority, also known as the *physical owner*, has the authorization to reset the drive to its original factory state. Since the PSID's password is typically printed on the device, you can use this to regain control if you've lost your SID password.
+  - The **AdminN** authorities can be given authorizations to perform the above actions, but are not eventually used by SEDManager.
+- The **Locking SP** provides the functionality related to the actual data on the disk, including access control and encryption. These are often referred to as *locking* functionality.
+  - The **AdminN** authorities, especially **Admin1**, are authorized to change the configuration related to locking. You'll frequently log in as Admin1 while setting up your device.
+  - The **UserN** authorities can be given access to locking and unlocking regions on the drive. UserN is typically assigned to a real person, who can then set their password and authentiate to use the computer.
+
+#### Locking ranges
+
+#### Shadow MBR
+
+### The Enterprise SSC
+
+
+
+### The Key per I/O SSC
+
+
+---
+
 ## The specification in a nutshell
 
 ### The core specification
