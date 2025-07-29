@@ -21,7 +21,7 @@ function HomepageHeader() {
           <Link className="button button--secondary button--lg" to="/downloads" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
             ⬇️ Download
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/overview/seds" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
+          <Link className="button button--secondary button--lg" to="/docs/overview/how_does_encryption_work" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
             📖 Learn about SEDs
           </Link>
           <Link className="button button--secondary button--lg" to="/docs/usage/introduction" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
