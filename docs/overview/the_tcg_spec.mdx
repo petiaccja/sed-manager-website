@@ -51,16 +51,48 @@ Authorities represent individuals, like users, admins, or owners. Authorities ca
 
 The configuration stored within security providers can vary, but one example would be the permissions the authorities have. Access to reading or writing the configuration is also controlled, and not all authorities can see or change them.
 
+## Locking and encryption features
+
+*Locking* and encryption are different concepts:
+- **Locking** refers to protecting access to the storage device's data through password authentication. Locking does not require the data to be encrypted, so, for example, one could unsolder the flash memory chips from an SSD to bypass the firmware's locking mechanism and access the data. For example, the Pyrite SSC supports locking, but does not necessarily support encryption.
+- **Encryption**, on the other hand, refers to encrypting the data that resides in the memory chips. When combined with locking - which is mandatory for all SSCs - encryption makes it impossible to bypass the firmware locking by unsoldering the chips or in any other way. The Opal, Opalite, Ruby, and Enterprise SSCs all have mandatory support for encryption. The Key per I/O SSC has a different approach, but also supports encryption.
+
+### Locking ranges
+
+Storage devices that follow the TCG specification divide their storage space into *locking ranges*:
+
+![Locking ranges](/img/illustrations/docs/overview/locking_ranges_light.svg#gh-light-mode-only)
+![Locking ranges](/img/illustrations/docs/overview/locking_ranges_dark.svg#gh-dark-mode-only)
+
+For each range, you can specify the start and end block in logically based addresses. The ranges can also be independently locked and unlocked, and you can set if they should automatically re-lock on a power cycle. Devices typically support up to 8 ranges, but this varies by SSC and product.
+
+There is a special range called the *global range*, of which there is only one. The global range always encompasses the entire drive, thus you cannot change its start and end points.
+
+On drives that support multiple users and multiple locking ranges, it is possible to assign fine-grained permissions to users regarding the locking ranges that they can access. Once the user has authenticated with their password, they can lock or unlock the permitted locking ranges for either reading or writing.
+
+On devices that support encryption, the blocks covered by a locking range are cryptographically protected until they are unlocked by a user. When the range is unlocked, its media encryption key is decrypted using the user's credentials, loaded into memory, and from there on the contents of the range can be read or written normally.
+
+### MBR shadowing
+
+Consider the scenario where you've locked down the entire drive through the global range. In this case, the partition table and the operating system's bootloader are also inaccessible until you unlock the drive, meaning you need to first run an application called the pre-boot authentication (PBA) environment. In the PBA environment, you can enter the password to unlock the global range, and continue the boot process of your operating system as usual. But where do you install the PBA environment?
+
+Instead of relying on a separate storage device, like a USB stick, some TCG-compliant drives have a builtin storage called the *shadow MBR*. The shadow MBR is typically small, around 128 mebibytes. When the device is unshadowed, it shows its regular contents: the locking ranges, which are either locked or unlocked. When the device is shadowed, it hides all its regular content, and shows contents of the shadow MBR in its first few hundred megabytes.
+
+![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_light.svg#gh-light-mode-only)
+![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_dark.svg#gh-dark-mode-only)
+
+Unlike a USB stick or a separate drive that stores the PBA environment, the shadow MBR is read-only and cannot be tampered with. The only way to modify the contents of the shadow MBR is if you have the administrative passwords to the storage device. This ensures that people cannot inject malicious code into the PBA image.
+
 ## Security subsystem classes
+
+The different SSCs implement locking ranges and MBR shadowing differently, and not all of them support all features.
 
 ### The Opal, Opalite, Pyrite, and Ruby SSCs
 
-These four SSCs are rather similar, and have the following organization:
+These four SSCs are rather similar. The security providers and authorities present on the drives are the following:
 
 ![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_light.svg#gh-light-mode-only)
 ![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_dark.svg#gh-dark-mode-only)
-
-The main difference between them is the different number of User and Admin authorities they support, and how they handle encryption.
 
 The meaning of the security providers and the authorities:
 - The **Admin SP** provides functionality for managing drive-wide configuration. This roughly boils down to protecting the administrative settings by a password, enabling the Locking SP, and reverting the device to factory defaults.
@@ -71,133 +103,37 @@ The meaning of the security providers and the authorities:
   - The **AdminN** authorities, especially **Admin1**, are authorized to change the configuration related to locking. You'll frequently log in as Admin1 while setting up your device.
   - The **UserN** authorities can be given access to locking and unlocking regions on the drive. UserN is typically assigned to a real person, who can then set their password and authentiate to use the computer.
 
+The main difference between the four SSCs is the different number of User and Admin authorities they support. Furthermore, not all of them support MBR shadowing and encryption, though all of them support locking. 
+
 #### Locking ranges
 
-#### Shadow MBR
+These four SSCs come with a global locking range, but the number of non-global locking ranges varies. (Opal, for example, has at least 8 non-global locking ranges, whereas Opalite only has a global range.) The access control is fine grained and configurable, and any user can be given permission access any locking range.
 
 ### The Enterprise SSC
 
+The Enterprise SSC is similar to the previous four SSCs:
 
+![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_light.svg#gh-light-mode-only)
+![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_dark.svg#gh-dark-mode-only)
+
+#### Authorities and locking ranges
+
+The main difference compared to the previous four SSCs are the organization of the locking ranges, which are called *bands* Enterprise. Each user (*band master*) is associated with exactly one band out of the factory, and these permissions cannot be reconfigured. In addition to the band masters, there is an *erase master* authority whose purpose is to cryptographically erase locking ranges.
 
 ### The Key per I/O SSC
 
+The Key per I/O SSC is very different from all the others, because it does not use locking ranges and users to manage access control to portions of the drive. While the Admin SP is largely the same, it has a KPIO SP instead of the usual Locking SP. The KPIO SP doesn't have any users:
 
----
+![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_light.svg#gh-light-mode-only)
+![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_dark.svg#gh-dark-mode-only)
 
-## The specification in a nutshell
+Since the KPIO SSC functions so differently and it's very new with perhaps no devices that implement it, SEDManager has only basic support for it and it's not described in detail by this documentation.
 
-### The core specification
+## Configuring drives
 
-The backbone of TCG's specifications for self-ecnrypting drives is the [core specification](https://trustedcomputinggroup.org/resource/tcg-storage-architecture-core-specification/). This specification describes how the firmware's configuration is organized and stored, and it also described how to communicate with the firmware to update the configuration.
+By now, you've probably figured out that setting up a SED boils down to:
+- setting the location of the locking ranges, much like partitioning a drive,
+- enabling user authorities, and specifying their passwords,
+- and giving permission to the user authorities to access some locking ranges.
 
-### Security subsystem classes
-
-The core specification alone is not practical or suitable for storage device manufacturers to implement -- it's too broad and it's missing vital elements. To solve this problem, TCG issued several specifications that complement the core specification by selecting which features are mandatory and by adding some vital extra features. These complementary specifications are called [security subsystem classes](https://trustedcomputinggroup.org/work-groups/storage/) (**SSC**s), and there are currently six of them.
-
-The six current SSCs:
-- Opal 1.0 & Opal 2.0
-- Opalite
-- Pyrite 1.0 & Pyrite 2.0
-- Ruby
-- Enterprise
-- Key Per I/O
-
-While TCG Opal is the most common, SEDManager recognizes all of them and can fully configure most of them.
-
-## Core concepts in TCG SEDs
-
-Due to the shared core specification, all SSCs follow a similar pattern. While it's not strictly necessary to understand these details in order to encrypt your drive, knowing a bit more can reduce the risk of messing up the drive or your data. Reading this will also clear up the confusion about all the different passwords you will be using during the encryption process.
-
-### Security providers
-
-SSCs group their functionality into so-called *security providers* (SPs). (After writing a complete application and reading the term about a thousand times, I still don't really see why this became the name, but let's just roll with it.) While the specification is really flexible, current SSCs split their functionality into to security providers:
-- **Admin** SP: The Admin SP exposes functionality related to the general management of the drive. This includes enabling and disabling the Locking SP and reverting the encryption configuration or the whole device into its factory defaults.
-- **Locking** & **KPIO** SPs: The Locking and the KPIO SPs expose functionality for configuring how the drive is encrypted. They also provide means to access the encrypted data. The KPIO SP is specific to Key Per I/O devices, and works differently compared to the Locking SP present in the rest of the SSCs.
-
-### Authorities
-
-Authorities represent individuals (users and administrators) who have the *authority* to perform some actions on the device. TCG-compliant drives employ a fine grained access control, so you can specify what actions an authority is allowed to do. Authorities exist within the context of a security provider.
-
-The most important authorities on **Opal**, **Opalite**, **Pyrite** and **Ruby** drives:
-
-| Authority             | Security provider | Purpose                                                         |
-|-----------------------|-------------------|-----------------------------------------------------------------|
-| SID (Owner)           | Admin SP          | Enable or disable the Locking SP, revert the device             |
-| PSID (Physical owner) | Admin SP          | Revert the device with a password printed on the device's label |
-| Admin1..AdminN        | Admin SP          | Not used by SEDManager                                          |
-| User1..UserN          | Locking SP        | Unlock the device and access data                               |
-| Admin1..AdminN        | Locking SP        | Set up and modify locking configuration                         |
-
-*Don't confuse the Admin SP Admins and the Locking SP Admins. SEDManager refers to the Locking SP Admins as AdminX.*
-
-Authorities on **Enterprise** drives (the Admin SP authorities are the same as above):
-
-| Authority                | Security provider | Purpose                 |
-|--------------------------|-------------------|-------------------------|
-| EraseMaster              | Locking SP        | Erase *locking ranges*  |
-| BandMaster0..BandMasterN | Locking SP        | Set up *locking ranges* |
-
-Authorities on **Key Per I/O** drives (the Admin SP authorities are the same as above):
-
-| Authority             | Security provider | Purpose                                 |
-|-----------------------|-------------------|-----------------------------------------|
-| Admin1..AdminN        | Locking SP        | Set up and modify locking configuration |
-
-#### Passwords
-
-SEDManager will often mention the *owner's password*, the *physical owner's password*, and the *Admin1* password. These refer to the passwords of the respective authorities listed above, and you have to enter them before you are *authorized* to the actions described in the above tables. For example, you need to enter the physical owner's (PSID's) password before the device let's you revert it to its factory defaults.
-
-### Locking ranges
-
-With the exception of Key Per I/O, the SSCs encryption capabilities are based on so-called *locking ranges*. Remember how devices store the data in a contiguous range of blocks? A locking range is just a subset of the entire range. Going back to the 1 TB example drive with 1.95 billion blocks, a locking range may be configured to represent blocks 0.5 billion to 0.7 billion, consisting of some 0.2 billion blocks. In addition to regular ranges, there is one *global range*, that includes all the 1.95 billion sectors of the example drive.
-
-Each locking range has the following configurable parameters:
-- **Range start**: The logical block address (LBA) of the first block of the locking range.
-- **Range length**: How many logical blocks the range encompasses.
-- **Read lock enabled**: If checked, the range will get read-locked after a power cycle.
-- **Write lock enabled**: If checked, the range will get write-locked after a power cycle.
-- **Read locked**: If the range is currently locked for reading.
-- **Write locked**: If the range is currently locked for writing.
-- **Active key**: The media encryption key currently used to encrypt the blocks of the range.
-
-In **Enterprise** drives, the ranges are called *bands*, while **Key per I/O** doesn't have locking ranges.
-
-## How data is encrypted
-
-### Media encryption key
-
-The key used to encrypt the blocks inside a locking range is called the *media encryption key* (MEK). The MEK is a randomly generated password that is being fed into a symmetric encryption algorithm, effectively encrypting all data that is written to that range's blocks. The MEK is also used to decrypt the data read from the range's blocks, making it readable to the operating system and your apps again.
-
-#### Erasing a locking range
-
-Since the only way to access data in the locking range is via the MEK, erasing a locking range is very easy: just delete the MEK. The data is still there, but there is nobody who can actually read it. This is called crypto shredding, and is different than older methods like repeatadly overwriting the entire drive with random bytes. Instead of taking hours, it only takes a moment, and it's also extremely safe.
-
-### Key encryption key
-
-If the MEK is a random password, and you don't even have access to it, then how do you actually unlock your drive? If changing the MEK erases the entire drive, then how can you change your password once you encrypted the drive? The answer is the so-called *key encryption key* (KEK). The name sounds strange, but the KEK is called like this, because it is used to encrypt the media encryption key.
-
-With this two-level system, reading a block of data from the hard drive requires the following steps:
-1. Ask the user for their password. (The password *is* the key encryption key.)
-2. Use the user's password to decrypt the media encryption key.
-3. Read a block of data from the disk.
-4. Use the media encryption key to decrypt the block of data.
-5. Present the decrypted block of data to the user.
-6. Forget the decrypted MEK, but keep the encrypted MEK in memory.
-7. Forget the user's password (i.e. the KEK).
-
-This way, we have gotten a block of data out of the locking range, we've successfully decrypted it, and after forgetting the keys, nobody can access more data.
-
-Notice that this system is very flexible. There can be multiple users, each having their own password (KEK). The device can store a copy of the MEK encrypted with each of the different KEKs, meaning multiple passwords can unlock the same locking range. You can also easily change the password (KEK) of a user, because it does not actually need changing the MEK (which would erase the locking range). You just have to reencrypt the MEK with a different KEK.
-
-## Booting from encrypted drives
-
-Encrypting every single block on the disk sounds enticing, but there is a little problem with it: if the partition table and the operating system's bootloader is encrypted, then how are you going to boot the computer? The solution to this in TCG-compliant drives is called *MBR shadowing*. When the device is encrypted and locked down, it can be configured to appear as a small (128 MiB) read-only drive, called the *shadow MBR*. During configuration, you can upload a small program on the shadow MBR that asks you for the password when booting and then unlocks the encryption on the drive. This causes the drive to switch to showing the unlocked contents of the drive, revealing the actual partition table and the operating system's bootloader. At this point, the operating system can boot as normal.
-
-## Configuring devices
-
-Luckily, you don't have to deal with KEKs and MEKs when configuring the device -- these details are hidden even from SEDManager. Configuration roughly comes down to:
-- Setting passwords for certain authorities (mainly the SID, and Locking SP Admins and Users)
-- Configuring the location and locking status of locking ranges
-- Giving users permission to lock and unlock certain locking ranges
-
-Read more about doing that in the [usage](../category/configuring-devices) section.
+This steps are precisely what SEDManager helps you achieve with a few clicks. To learn more, check out the [articles](/docs/usage/introduction) about using SEDManager.
