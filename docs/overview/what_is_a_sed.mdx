@@ -1,0 +1,74 @@
+# What is a self-encrypting drive?
+
+A **self-encrypting drive** (**SED**) is simply a storage device (e.g. HDD, SSD) that has encryption capabilities built into its firmware, and thus supports **hardware encryption**. To understand how it works, let's try to build one.
+
+## Block devices
+
+Modern computer storage devices organize their medium into blocks. A block is typically 512 bytes, but other formats also exist. For example, with 512-byte blocks, a 1 MiB hard drive would be split into 2048 blocks.
+
+Consequently, when files are written onto the storage device, the files also have to be split into blocks. For example, a 1700-byte file would occupy four blocks. Since four blocks provide space for 2048 bytes in total, a 1700 byte file will leave 348 bytes of wasted space at the end of the fourth block.
+
+We can visualize this as four occupied blocks, preceded and followed by a long sequence of blocks that are empty space or store other files:
+
+![Block device layout](/img/illustrations/docs/overview/block_device_layout_light.svg#gh-light-mode-only)
+![Block device layout](/img/illustrations/docs/overview/block_device_layout_dark.svg#gh-dark-mode-only)
+
+Our goal is to encrypt these blocks to protect the data.
+
+## The media encryption key (MEK)
+
+Conveniently enough, the block organization of storage devices is very similar to the block ciphers we've introduced in the previous chapter. While the block size for the storage device and the symmetric encryption algorithm may be different, let's just assume for simplicity that they are the same.
+
+In that case, all we have to do is pick a password, which we'll call the *media encryption key* (MEK), and use that password to encrypt each block of the storage device:
+
+![Block device MEK](/img/illustrations/docs/overview/block_device_mek_light.svg#gh-light-mode-only)
+![Block device MEK](/img/illustrations/docs/overview/block_device_mek_dark.svg#gh-dark-mode-only)
+
+As for decryption, remember that the algorithm is symmetric, so we can turn the ciphers back into the original data blocks using the MEK.
+
+### Would this work in practice?
+
+Let's try to **change the MEK**. For this, we would have to go over every single block of the storage device, read the block and decrypt it with the old MEK, and immediately after encrypt the block with the new MEK and write it to the medium. You'd have to overwrite the entire drive just to change the password, which seems prohibitively inefficient.
+
+Another issue is the case of **multiple users**. Each user would have to know the MEK, effectively sharing the password among themselves. While this is not necessarily worse regarding security, it's an issue because users might not find the shared MEK memorable enough.
+
+## The key encryption key (KEK)
+
+To get around the limitation of using only a MEK, we can introduce the *key encryption key* (KEK):
+
+![Block device KEK](/img/illustrations/docs/overview/block_device_kek_light.svg#gh-light-mode-only)
+![Block device KEK](/img/illustrations/docs/overview/block_device_kek_dark.svg#gh-dark-mode-only)
+
+The somewhat weird naming for the KEK actually makes sense: the KEK is used to encrypt the MEK. After we've encrypted the MEK, we can throw out the original MEK, and store only the encrypted one. This means that the only way to access the data on the disk is to use the KEK to decrypt the MEK, and then use the MEK to decrypt the data. Effectively, without knowing the KEK, you cannot access the data, therefore the KEK becomes our user password.
+
+### Why does this work now?
+
+Let's try to **change the KEK**, that is, the user password, once again. First, we need to decrypt the MEK with the old KEK, then we need to encrypt the decrypted MEK with the new KEK, and finally, store the encrypted MEK. Notice that the actual MEK hasn't changed, so we do not have to re-encrypt the entire drive with a new key. The password change is now instantaneous.
+
+What about having **multiple users**? We can now have multiple KEKs, one for each user, and we can encrypt the MEK once with each KEK. This way, no matter which user decrypts their encrypted MEK with their KEK, they will all get the same unencrypted MEK, which gives them access to the data. The users can also independently change their KEKs.
+
+## Instant secure erase
+
+Another benefit of this scheme is the ability to instantly erase the entire drive. We can simply delete the encrypted MEKs, so even in possession of the KEKs, there is no way to retrieve the unencrypted MEK, therefore no way to access the data on the drive. This operation is often called **crypto shredding**, and is also instantaneous.
+
+:::note
+
+The same scheme is used by software encryption solutions too. The difference is only in where the encryption happens.
+
+:::
+
+## Interaction with the rest of the computer
+
+### Reading and writing data
+
+In the case of SEDs, the entirety of the encryption is implemented within the storage device's firmware, and the encryption happens just before the data is written to the physical medium. This means that process is opaque to the operating system and other hardware components, and requires no support from either. The messaging over interfaces, like SATA, happens in unencrypted plaintext.
+
+### Configuring the firmware
+
+The firmware is configured by sending special commands to the storage device over its bus. The commands can be used to set the KEKs, as well as to erase and generate new MEKs.
+
+Additionally, devices can be in either a locked or an unlocked state. In the locked state, no KEK has been used yet to decrypt the MEK, therefore there is no way to read or write data from or to the device. In the unlocked state, the MEK has been decrypted by one of the KEKs, therefore data can be read from or written to the device. The locking state is also set by sending special commands to the device over the bus.
+
+In order to boot the operating system, a small application (called the pre-boot authentication environment) must set the device into the unlocked state. This is similar to yet another stage of bootloader.
+
+

@@ -1,0 +1,139 @@
+# The TCG storage specification
+
+In the previous chapter, we've discussed "special commands" that are sent to the storage device to configure its firmware for encryption. Imagine if every manufacturer came up with their own special commands? That would be a nightmare, so luckily, the [Trusted Computing Group](https://trustedcomputinggroup.org/) has developed a [specification](https://trustedcomputinggroup.org/work-groups/storage/) for these special commands that storage device manufacturers can implement.
+
+Since this seems to be the only widespread specification, this is what SEDManager supports. While it's not necessary to have a deep understanding of it, this document explains the basics so that you actually understand what's going on while configuring your drive.
+
+## An overview of the specification
+
+### The core specification
+
+The specification is organized into a [*core specification*](https://trustedcomputinggroup.org/resource/tcg-storage-architecture-core-specification/) that defines the architecture of that the encryption features build upon. The core specification alone is not suitable for developing storage devices, as it's both too complex and leaves certain areas uncovered.
+
+### Security subsystem classes
+
+In addition to the core specification, there are several *security subsystem classes* (SSCs). The SSCs supplement the core specification by specifying which parts of it are mandatory to implement, and by adding missing details. Together with the core specification, they can be used to develop actual storage devices.
+
+Currently, there are six SSCs:
+- Opal (version 1.0 & 2.0)
+- Opalite
+- Pyrite (version 1.0 & 2.0)
+- Ruby
+- Enterprise
+- Key per I/O
+
+### Feature sets
+
+Finally, there are also independent feature sets which a device can optionally support. Some feature sets are mandatory for certain SSCs. 
+
+Examples include:
+- Block SID authentication
+- Additional DataStore tables
+
+## The core specification
+
+The core specification defines how the "special messages" used to configure the firmware are encoded. Furthermore, it also defines how the configuration of the firmware is organized, and how it can modified via special messages. These details are only relevant if you're developing software that interacts with TCG SEDs.
+
+What's more important is the concept of *security providers* (SPs) and *authorities*:
+
+![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_light.svg#gh-light-mode-only)
+![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_dark.svg#gh-dark-mode-only)
+
+### Security providers
+
+Each device contains one or more security providers. SPs act as a group for related functionality and store related configuration. Additionally, each SP contains one or more authorities.
+
+### Authorities
+
+Authorities represent individuals, like users, admins, or owners. Authorities can have permissions to perform certain actions (e.g. erase the drive, change password), and the permissions can often be changed during the provisioning of the device.
+
+### Configuration
+
+The configuration stored within security providers can vary, but one example would be the permissions the authorities have. Access to reading or writing the configuration is also controlled, and not all authorities can see or change them.
+
+## Locking and encryption features
+
+*Locking* and encryption are different concepts:
+- **Locking** refers to protecting access to the storage device's data through password authentication. Locking does not require the data to be encrypted, so, for example, one could unsolder the flash memory chips from an SSD to bypass the firmware's locking mechanism and access the data. For example, the Pyrite SSC supports locking, but does not necessarily support encryption.
+- **Encryption**, on the other hand, refers to encrypting the data that resides in the memory chips. When combined with locking - which is mandatory for all SSCs - encryption makes it impossible to bypass the firmware locking by unsoldering the chips or in any other way. The Opal, Opalite, Ruby, and Enterprise SSCs all have mandatory support for encryption. The Key per I/O SSC has a different approach, but also supports encryption.
+
+### Locking ranges
+
+Storage devices that follow the TCG specification divide their storage space into *locking ranges*:
+
+![Locking ranges](/img/illustrations/docs/overview/locking_ranges_light.svg#gh-light-mode-only)
+![Locking ranges](/img/illustrations/docs/overview/locking_ranges_dark.svg#gh-dark-mode-only)
+
+For each range, you can specify the start and end block in logically based addresses. The ranges can also be independently locked and unlocked, and you can set if they should automatically re-lock on a power cycle. Devices typically support up to 8 ranges, but this varies by SSC and product.
+
+There is a special range called the *global range*, of which there is only one. The global range always encompasses the entire drive, thus you cannot change its start and end points.
+
+On drives that support multiple users and multiple locking ranges, it is possible to assign fine-grained permissions to users regarding the locking ranges that they can access. Once the user has authenticated with their password, they can lock or unlock the permitted locking ranges for either reading or writing.
+
+On devices that support encryption, the blocks covered by a locking range are cryptographically protected until they are unlocked by a user. When the range is unlocked, its media encryption key is decrypted using the user's credentials, loaded into memory, and from there on the contents of the range can be read or written normally.
+
+### MBR shadowing
+
+Consider the scenario where you've locked down the entire drive through the global range. In this case, the partition table and the operating system's bootloader are also inaccessible until you unlock the drive, meaning you need to first run an application called the pre-boot authentication (PBA) environment. In the PBA environment, you can enter the password to unlock the global range, and continue the boot process of your operating system as usual. But where do you install the PBA environment?
+
+Instead of relying on a separate storage device, like a USB stick, some TCG-compliant drives have a builtin storage called the *shadow MBR*. The shadow MBR is typically small, around 128 mebibytes. When the device is unshadowed, it shows its regular contents: the locking ranges, which are either locked or unlocked. When the device is shadowed, it hides all its regular content, and shows contents of the shadow MBR in its first few hundred megabytes.
+
+![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_light.svg#gh-light-mode-only)
+![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_dark.svg#gh-dark-mode-only)
+
+Unlike a USB stick or a separate drive that stores the PBA environment, the shadow MBR is read-only and cannot be tampered with. The only way to modify the contents of the shadow MBR is if you have the administrative passwords to the storage device. This ensures that people cannot inject malicious code into the PBA image.
+
+## Security subsystem classes
+
+The different SSCs implement locking ranges and MBR shadowing differently, and not all of them support all features.
+
+### The Opal, Opalite, Pyrite, and Ruby SSCs
+
+These four SSCs are rather similar. The security providers and authorities present on the drives are the following:
+
+![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_light.svg#gh-light-mode-only)
+![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_dark.svg#gh-dark-mode-only)
+
+The meaning of the security providers and the authorities:
+- The **Admin SP** provides functionality for managing drive-wide configuration. This roughly boils down to protecting the administrative settings by a password, enabling the Locking SP, and reverting the device to factory defaults.
+  - The **SID** authority, also known as the *owner* authority, has primary control over the settings in the Admin SP, as well as the authorization to perform the Admin SP action mentioned above.
+  - The **PSID** authority, also known as the *physical owner*, has the authorization to reset the drive to its original factory state. Since the PSID's password is typically printed on the device, you can use this to regain control if you've lost your SID password.
+  - The **AdminN** authorities can be given authorizations to perform the above actions, but are not eventually used by SEDManager.
+- The **Locking SP** provides the functionality related to the actual data on the disk, including access control and encryption. These are often referred to as *locking* functionality.
+  - The **AdminN** authorities, especially **Admin1**, are authorized to change the configuration related to locking. You'll frequently log in as Admin1 while setting up your device.
+  - The **UserN** authorities can be given access to locking and unlocking regions on the drive. UserN is typically assigned to a real person, who can then set their password and authentiate to use the computer.
+
+The main difference between the four SSCs is the different number of User and Admin authorities they support. Furthermore, not all of them support MBR shadowing and encryption, though all of them support locking. 
+
+#### Locking ranges
+
+These four SSCs come with a global locking range, but the number of non-global locking ranges varies. (Opal, for example, has at least 8 non-global locking ranges, whereas Opalite only has a global range.) The access control is fine grained and configurable, and any user can be given permission access any locking range.
+
+### The Enterprise SSC
+
+The Enterprise SSC is similar to the previous four SSCs:
+
+![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_light.svg#gh-light-mode-only)
+![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_dark.svg#gh-dark-mode-only)
+
+#### Authorities and locking ranges
+
+The main difference compared to the previous four SSCs are the organization of the locking ranges, which are called *bands* Enterprise. Each user (*band master*) is associated with exactly one band out of the factory, and these permissions cannot be reconfigured. In addition to the band masters, there is an *erase master* authority whose purpose is to cryptographically erase locking ranges.
+
+### The Key per I/O SSC
+
+The Key per I/O SSC is very different from all the others, because it does not use locking ranges and users to manage access control to portions of the drive. While the Admin SP is largely the same, it has a KPIO SP instead of the usual Locking SP. The KPIO SP doesn't have any users:
+
+![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_light.svg#gh-light-mode-only)
+![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_dark.svg#gh-dark-mode-only)
+
+Since the KPIO SSC functions so differently and it's very new with perhaps no devices that implement it, SEDManager has only basic support for it and it's not described in detail by this documentation.
+
+## Configuring drives
+
+By now, you've probably figured out that setting up a SED boils down to:
+- setting the location of the locking ranges, much like partitioning a drive,
+- enabling user authorities, and specifying their passwords,
+- and giving permission to the user authorities to access some locking ranges.
+
+This steps are precisely what SEDManager helps you achieve with a few clicks. To learn more, check out the [articles](/docs/usage/introduction) about using SEDManager.

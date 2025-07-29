@@ -1,0 +1,124 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0" version="28.0.7">
+  <diagram id="EeVUH6nFuGjB4klK4WX8" name="Page-1">
+    <mxGraphModel dx="1426" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-1" value="File system driver&lt;br&gt;(e.g. NTFS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="120" y="200" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-2" value="File&lt;br&gt;(e.g. open Word document)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=16;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="120" y="20" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="Pv5NhmC2SuuiENscSE-0-14" target="Pv5NhmC2SuuiENscSE-0-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="180" as="sourcePoint" />
+            <mxPoint x="340" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-7" value="Device firmware&lt;br&gt;(e.g. Phison)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="120" y="440" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="Pv5NhmC2SuuiENscSE-0-7" target="Pv5NhmC2SuuiENscSE-0-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="250" as="sourcePoint" />
+            <mxPoint x="470" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-9" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="Pv5NhmC2SuuiENscSE-0-2" target="Pv5NhmC2SuuiENscSE-0-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="180" as="sourcePoint" />
+            <mxPoint x="480" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-12" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="Pv5NhmC2SuuiENscSE-0-6" target="Pv5NhmC2SuuiENscSE-0-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="510" y="210" as="sourcePoint" />
+            <mxPoint x="510" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-13" value="&lt;br&gt;Medium&lt;br&gt;(e.g. NAND flash)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="120" y="520" width="95" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-14" value="Application&lt;br&gt;(e.g. MS Word)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="120" y="120" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-15" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="140" as="sourcePoint" />
+            <mxPoint x="230" y="139.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-16" value="File-based encryption" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="335" y="125" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-17" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="220" as="sourcePoint" />
+            <mxPoint x="230" y="219.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-18" value="Encrypted file system" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="335" y="205" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-19" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="260" as="sourcePoint" />
+            <mxPoint x="180" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-20" value="Volume-based encryption" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="336" y="245" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="460" as="sourcePoint" />
+            <mxPoint x="230" y="459.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-23" value="Operating system" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fontSize=14;startSize=40;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="180" width="460" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-6" value="Device driver&lt;br&gt;(e.g. NVMe)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="Pv5NhmC2SuuiENscSE-0-23">
+          <mxGeometry x="80" y="260" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-25" value="Volume management" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="Pv5NhmC2SuuiENscSE-0-23">
+          <mxGeometry x="80" y="180" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-11" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="Pv5NhmC2SuuiENscSE-0-23" source="Pv5NhmC2SuuiENscSE-0-25" target="Pv5NhmC2SuuiENscSE-0-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="100" as="sourcePoint" />
+            <mxPoint x="460" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-24" value="Storage device" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fontSize=14;startSize=40;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="40" y="420" width="460" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-22" value="Hardware-based encryption" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" vertex="1" parent="Pv5NhmC2SuuiENscSE-0-24">
+          <mxGeometry x="295" y="25" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-27" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="Pv5NhmC2SuuiENscSE-0-1" target="Pv5NhmC2SuuiENscSE-0-25">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="170" y="240" as="sourcePoint" />
+            <mxPoint x="170" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-28" value="User applications" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fontSize=14;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="460" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-29" value="Device driver&lt;br&gt;(e.g. NVMe)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="Pv5NhmC2SuuiENscSE-0-28">
+          <mxGeometry x="80" y="260" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-30" value="Volume management" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="Pv5NhmC2SuuiENscSE-0-28">
+          <mxGeometry x="80" y="180" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pv5NhmC2SuuiENscSE-0-31" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="Pv5NhmC2SuuiENscSE-0-28" source="Pv5NhmC2SuuiENscSE-0-30" target="Pv5NhmC2SuuiENscSE-0-29">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="100" as="sourcePoint" />
+            <mxPoint x="460" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
