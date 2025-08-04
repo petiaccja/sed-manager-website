@@ -1,8 +1,14 @@
-.downloadButton {
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 100px;
-    border-width: 0px;
-    background-color: var(--ifm-color-primary);
-    color: var(--ifm-color-content-inverse);
+.downloadTable {
+    border-style: none;
+    background-color: transparent;
+}
+
+.downloadTable td {
+    border-style: none;
+    background-color: transparent;
+}
+
+.downloadTable tr {
+    border-style: none;
+    background-color: transparent;
 }
