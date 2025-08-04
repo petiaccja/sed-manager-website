@@ -4,21 +4,21 @@ description: Define the locking ranges that control which sections of the drives
 
 # Editing locking ranges
 
+:::warning Edit non-empty drives carefully
+
+Reassigning a region of the drive to a new locking range will erase the contents of that region. Take extra care when editing drives already in use, and always back up your data!
+
+:::
+
 ## Locking range parameters
 
 Locking ranges are described [here](/docs/theory/the_tcg_spec#locking-ranges). In addition to the start and the length of the locking range, SEDManager also display the end of the locking range. The end LBA itself is not included in the range. You can freely change either the start, the length, or the end, the three values are kept consistent. Sometimes you will notice that SEDManager adjusts the values you type in. This is because some drives require alignment of the locking ranges and SEDManager adheres to that.
-
-:::info
-
-You can convert LBAs to bytes using the *logical block size* displayed on the device's main page under **Geometry features**. You can also see the alignment requirements there.
-
-:::
 
 ## Erasing ranges
 
 You can cryptographically erase a locking range by clicking the erase button on the range's row. This deletes the current media encryption key (MEK) and replaces it with a new one, permanently erasing all data associated with the locking range. The data cannot be recovered in any way, ever, so be careful with this function.
 
-:::tip
+:::tip Avoid predictable keys
 
 When you first configure the drive, erase the global range once. Manufacturers sometimes use predictable algorithms to generate the default key in the factory, but the device should generate secure completely random keys, reducing the chance of someone guessing the encryption key to your data.
 
