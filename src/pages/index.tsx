@@ -37,7 +37,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`Home`}
-      description="Get started with configuring your self-encrypting drives">
+      description="An easy to use application to enable your TCG (Opal & more) self-encrypting drives. Supports pre-boot authentication and many TCG standards.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

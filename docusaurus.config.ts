@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'SEDManager',
-  tagline: 'Set up your self-encrypting drives',
+  tagline: 'Enable your self-encrypting drives simply and quickly',
   favicon: 'img/logo.ico',
 
   url: 'https://sedmanager.app',
