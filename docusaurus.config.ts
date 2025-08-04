@@ -60,13 +60,13 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'introToSEDs',
+          sidebarId: 'theorySidebar',
           position: 'left',
-          label: 'Overview',
+          label: 'Theory',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'usingSEDManager',
+          sidebarId: 'usageSidebar',
           position: 'left',
           label: 'Usage',
         },

@@ -6,8 +6,8 @@ description: Learn about the theory of encrypting digital data. This article ser
 
 ## Symmetric encryption algorithms
 
-![Symmetric encryption process](/img/illustrations/docs/overview/symmetric_encryption_light.svg#gh-light-mode-only)
-![Symmetric encryption process](/img/illustrations/docs/overview/symmetric_encryption_dark.svg#gh-dark-mode-only)
+![Symmetric encryption process](/img/illustrations/docs/theory/symmetric_encryption_light.svg#gh-light-mode-only)
+![Symmetric encryption process](/img/illustrations/docs/theory/symmetric_encryption_dark.svg#gh-dark-mode-only)
 
 Symmetric encryption algorithms are the foundation of data encryption. They are essentially mathematical operators that take a password (also known as *key*) and a piece of data, and combine them to produce *ciphertext*. Based only on the ciphertext, it's impossible to guess what the original data was, so in ciphertext form, the data is safe from prying eyes. These algorithms are called symmetric because they are reversible. In the decryption procedure, the password is combined with the ciphertext by a similar mathematical operator, and it gives back the original piece of data. As you've already guessed, you can execute the decryption with the wrong password, but it won't give you back the original data, it will give you only gibberish.
 
@@ -17,8 +17,8 @@ The most commonly used algorithms in software and hardware encryption tools are 
 
 In the aforementioned algorithms, the key is 128 bit or 256 bit long, while the data is always 128 bit long. Consequently, to encrypt a longer piece of data, like an image file, you have to split it into 128-bit blocks:
 
-![Block cipher](/img/illustrations/docs/overview/block_cipher_light.svg#gh-light-mode-only)
-![Block cipher](/img/illustrations/docs/overview/block_cipher_dark.svg#gh-dark-mode-only)
+![Block cipher](/img/illustrations/docs/theory/block_cipher_light.svg#gh-light-mode-only)
+![Block cipher](/img/illustrations/docs/theory/block_cipher_dark.svg#gh-dark-mode-only)
 
 The simplest option is to independently encrypt each piece of data using the same password, but such simple approaches can have vulnerabilities. In practice, encryption software or firmware uses more [advanced schemes](https://en.wikipedia.org/wiki/Disk_encryption_theory#Block_cipher-based_modes) to chain the blocks.
 
@@ -33,8 +33,8 @@ Imagine you are editing a confidential business contract in Microsoft Word. What
 
 Since the contract you're editing is confidential, you want to encrypt it in case your laptop gets stolen or lost. There are many viable spots in the process to inject the encryption algorithms we discussed above:
 
-![Encryption points](/img/illustrations/docs/overview/encryption_points_light.svg#gh-light-mode-only)
-![Encryption points](/img/illustrations/docs/overview/encryption_points_dark.svg#gh-dark-mode-only)
+![Encryption points](/img/illustrations/docs/theory/encryption_points_light.svg#gh-light-mode-only)
+![Encryption points](/img/illustrations/docs/theory/encryption_points_dark.svg#gh-dark-mode-only)
 
 ### File-based encryption
 

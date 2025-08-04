@@ -12,7 +12,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Support for TCG drives',
-    illustration: require("@site/static/img/illustrations/feature_sed.png").default,
+    illustration: require("@site/static/img/illustrations/home/feature_sed.png").default,
     description: (
       <>
         TCG <b>Opal</b>, <b>Opalite</b>, <b>Pyrite</b>, and <b>Ruby</b> drives
@@ -23,7 +23,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Easy to Use GUI',
-    illustration: require("@site/static/img/illustrations/feature_gui.png").default,
+    illustration: require("@site/static/img/illustrations/home/feature_gui.png").default,
     description: (
       <>
         You can configure your drives in just a few minutes thanks to the
@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Pre-Boot Authentication',
-    illustration: require("@site/static/img/illustrations/feature_pba.png").default,
+    illustration: require("@site/static/img/illustrations/home/feature_pba.png").default,
     description: (
       <>
         Encrypt your boot drive using the PBA environment on devices. This is
