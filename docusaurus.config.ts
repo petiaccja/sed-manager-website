@@ -94,7 +94,48 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} Péter Kardos`,
+      links: [
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'Feedback',
+              to: 'https://github.com/petiaccja/sed-manager-rs/issues',
+            },
+            {
+              label: 'Ask a question',
+              to: 'https://github.com/petiaccja/sed-manager-rs/discussions',
+            },
+          ],
+        },
+        {
+          title: 'Source code',
+          items: [
+            {
+              label: 'Application',
+              to: 'https://github.com/petiaccja/sed-manager-rs',
+            },
+            {
+              label: 'PBA',
+              to: 'https://github.com/petiaccja/sed-manager-pba',
+            },
+            {
+              label: 'Website',
+              to: 'https://github.com/petiaccja/sed-manager-website',
+            },
+          ],
+        },
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'License agreement',
+              to: 'https://github.com/petiaccja/sed-manager-rs/blob/master/LICENSE.md',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Péter Kardos <span style="opacity:0.67;">| Built with Docusaurus<span>`,
     },
     prism: {
       theme: prismThemes.github,
