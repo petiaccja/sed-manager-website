@@ -1,3 +1,7 @@
+---
+description: Most self-encrypting drives follow the specifications developed by the TCG. A basic understand of the specifications is helpful for setting up your SEDs.
+---
+
 # The TCG storage specification
 
 In the previous chapter, we've discussed "special commands" that are sent to the storage device to configure its firmware for encryption. Imagine if every manufacturer came up with their own special commands? That would be a nightmare, so luckily, the [Trusted Computing Group](https://trustedcomputinggroup.org/) has developed a [specification](https://trustedcomputinggroup.org/work-groups/storage/) for these special commands that storage device manufacturers can implement.
@@ -36,8 +40,8 @@ The core specification defines how the "special messages" used to configure the 
 
 What's more important is the concept of *security providers* (SPs) and *authorities*:
 
-![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_light.svg#gh-light-mode-only)
-![Generic SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_generic_sd_dark.svg#gh-dark-mode-only)
+![Generic SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_generic_sd_light.svg#gh-light-mode-only)
+![Generic SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_generic_sd_dark.svg#gh-dark-mode-only)
 
 ### Security providers
 
@@ -61,8 +65,8 @@ The configuration stored within security providers can vary, but one example wou
 
 Storage devices that follow the TCG specification divide their storage space into *locking ranges*:
 
-![Locking ranges](/img/illustrations/docs/overview/locking_ranges_light.svg#gh-light-mode-only)
-![Locking ranges](/img/illustrations/docs/overview/locking_ranges_dark.svg#gh-dark-mode-only)
+![Locking ranges](/img/illustrations/docs/theory/locking_ranges_light.svg#gh-light-mode-only)
+![Locking ranges](/img/illustrations/docs/theory/locking_ranges_dark.svg#gh-dark-mode-only)
 
 For each range, you can specify the start and end block in logically based addresses. The ranges can also be independently locked and unlocked, and you can set if they should automatically re-lock on a power cycle. Devices typically support up to 8 ranges, but this varies by SSC and product.
 
@@ -78,8 +82,8 @@ Consider the scenario where you've locked down the entire drive through the glob
 
 Instead of relying on a separate storage device, like a USB stick, some TCG-compliant drives have a builtin storage called the *shadow MBR*. The shadow MBR is typically small, around 128 mebibytes. When the device is unshadowed, it shows its regular contents: the locking ranges, which are either locked or unlocked. When the device is shadowed, it hides all its regular content, and shows contents of the shadow MBR in its first few hundred megabytes.
 
-![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_light.svg#gh-light-mode-only)
-![MBR shadowing](/img/illustrations/docs/overview/mbr_shadowing_dark.svg#gh-dark-mode-only)
+![MBR shadowing](/img/illustrations/docs/theory/mbr_shadowing_light.svg#gh-light-mode-only)
+![MBR shadowing](/img/illustrations/docs/theory/mbr_shadowing_dark.svg#gh-dark-mode-only)
 
 Unlike a USB stick or a separate drive that stores the PBA environment, the shadow MBR is read-only and cannot be tampered with. The only way to modify the contents of the shadow MBR is if you have the administrative passwords to the storage device. This ensures that people cannot inject malicious code into the PBA image.
 
@@ -91,8 +95,8 @@ The different SSCs implement locking ranges and MBR shadowing differently, and n
 
 These four SSCs are rather similar. The security providers and authorities present on the drives are the following:
 
-![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_light.svg#gh-light-mode-only)
-![Opal SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_opal_sd_dark.svg#gh-dark-mode-only)
+![Opal SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_opal_sd_light.svg#gh-light-mode-only)
+![Opal SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_opal_sd_dark.svg#gh-dark-mode-only)
 
 The meaning of the security providers and the authorities:
 - The **Admin SP** provides functionality for managing drive-wide configuration. This roughly boils down to protecting the administrative settings by a password, enabling the Locking SP, and reverting the device to factory defaults.
@@ -113,8 +117,8 @@ These four SSCs come with a global locking range, but the number of non-global l
 
 The Enterprise SSC is similar to the previous four SSCs:
 
-![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_light.svg#gh-light-mode-only)
-![Enterprise SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_enterprise_sd_dark.svg#gh-dark-mode-only)
+![Enterprise SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_enterprise_sd_light.svg#gh-light-mode-only)
+![Enterprise SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_enterprise_sd_dark.svg#gh-dark-mode-only)
 
 #### Authorities and locking ranges
 
@@ -124,8 +128,8 @@ The main difference compared to the previous four SSCs are the organization of t
 
 The Key per I/O SSC is very different from all the others, because it does not use locking ranges and users to manage access control to portions of the drive. While the Admin SP is largely the same, it has a KPIO SP instead of the usual Locking SP. The KPIO SP doesn't have any users:
 
-![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_light.svg#gh-light-mode-only)
-![KPIO SD SPs and authorities](/img/illustrations/docs/overview/sp_auth_kpio_sd_dark.svg#gh-dark-mode-only)
+![KPIO SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_kpio_sd_light.svg#gh-light-mode-only)
+![KPIO SD SPs and authorities](/img/illustrations/docs/theory/sp_auth_kpio_sd_dark.svg#gh-dark-mode-only)
 
 Since the KPIO SSC functions so differently and it's very new with perhaps no devices that implement it, SEDManager has only basic support for it and it's not described in detail by this documentation.
 

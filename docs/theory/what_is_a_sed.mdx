@@ -1,3 +1,7 @@
+---
+description: Learn about how encryption technologies are applied within a self-encrypting drive, and how they protect your data from prying eyes.
+---
+
 # What is a self-encrypting drive?
 
 A **self-encrypting drive** (**SED**) is simply a storage device (e.g. HDD, SSD) that has encryption capabilities built into its firmware, and thus supports **hardware encryption**. To understand how it works, let's try to build one.
@@ -10,8 +14,8 @@ Consequently, when files are written onto the storage device, the files also hav
 
 We can visualize this as four occupied blocks, preceded and followed by a long sequence of blocks that are empty space or store other files:
 
-![Block device layout](/img/illustrations/docs/overview/block_device_layout_light.svg#gh-light-mode-only)
-![Block device layout](/img/illustrations/docs/overview/block_device_layout_dark.svg#gh-dark-mode-only)
+![Block device layout](/img/illustrations/docs/theory/block_device_layout_light.svg#gh-light-mode-only)
+![Block device layout](/img/illustrations/docs/theory/block_device_layout_dark.svg#gh-dark-mode-only)
 
 Our goal is to encrypt these blocks to protect the data.
 
@@ -21,8 +25,8 @@ Conveniently enough, the block organization of storage devices is very similar t
 
 In that case, all we have to do is pick a password, which we'll call the *media encryption key* (MEK), and use that password to encrypt each block of the storage device:
 
-![Block device MEK](/img/illustrations/docs/overview/block_device_mek_light.svg#gh-light-mode-only)
-![Block device MEK](/img/illustrations/docs/overview/block_device_mek_dark.svg#gh-dark-mode-only)
+![Block device MEK](/img/illustrations/docs/theory/block_device_mek_light.svg#gh-light-mode-only)
+![Block device MEK](/img/illustrations/docs/theory/block_device_mek_dark.svg#gh-dark-mode-only)
 
 As for decryption, remember that the algorithm is symmetric, so we can turn the ciphers back into the original data blocks using the MEK.
 
@@ -36,8 +40,8 @@ Another issue is the case of **multiple users**. Each user would have to know th
 
 To get around the limitation of using only a MEK, we can introduce the *key encryption key* (KEK):
 
-![Block device KEK](/img/illustrations/docs/overview/block_device_kek_light.svg#gh-light-mode-only)
-![Block device KEK](/img/illustrations/docs/overview/block_device_kek_dark.svg#gh-dark-mode-only)
+![Block device KEK](/img/illustrations/docs/theory/block_device_kek_light.svg#gh-light-mode-only)
+![Block device KEK](/img/illustrations/docs/theory/block_device_kek_dark.svg#gh-dark-mode-only)
 
 The somewhat weird naming for the KEK actually makes sense: the KEK is used to encrypt the MEK. After we've encrypted the MEK, we can throw out the original MEK, and store only the encrypted one. This means that the only way to access the data on the disk is to use the KEK to decrypt the MEK, and then use the MEK to decrypt the data. Effectively, without knowing the KEK, you cannot access the data, therefore the KEK becomes our user password.
 

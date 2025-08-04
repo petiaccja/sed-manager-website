@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'SEDManager',
-  tagline: 'Set up your self-encrypting drives',
+  tagline: 'Enable your self-encrypting drives simply and quickly',
   favicon: 'img/logo.ico',
 
   url: 'https://sedmanager.app',
@@ -60,13 +60,13 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'introToSEDs',
+          sidebarId: 'theorySidebar',
           position: 'left',
-          label: 'Overview',
+          label: 'Theory',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'usingSEDManager',
+          sidebarId: 'usageSidebar',
           position: 'left',
           label: 'Usage',
         },

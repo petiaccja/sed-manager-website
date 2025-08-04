@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem'
 
 export default function Downloads() {
     return (
-        <Layout title={`Downloads`} description="Download precompiled executables and PBA images">
+        <Layout title={`Downloads`} description="Download the configuration app and the pre-boot authentication environment for Windows & Linux.">
             <main style={{ maxWidth: '996px', margin: '0 auto', display: "flex", flexDirection: "column" }}>
                 <Tabs
                     groupId="operating-system"

@@ -3,12 +3,12 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const sidebars: SidebarsConfig = {
-  introToSEDs: [
-    'overview/how_does_encryption_work',
-    'overview/what_is_a_sed',
-    'overview/the_tcg_spec',
+  theorySidebar: [
+    'theory/how_does_encryption_work',
+    'theory/what_is_a_sed',
+    'theory/the_tcg_spec',
   ],
-  usingSEDManager: [
+  usageSidebar: [
     'usage/introduction',
     {
       type: 'category',

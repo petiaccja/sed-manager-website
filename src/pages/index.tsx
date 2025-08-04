@@ -21,7 +21,7 @@ function HomepageHeader() {
           <Link className="button button--secondary button--lg" to="/downloads" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
             ⬇️ Download
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/overview/how_does_encryption_work" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
+          <Link className="button button--secondary button--lg" to="/docs/theory/how_does_encryption_work" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
             📖 Learn about SEDs
           </Link>
           <Link className="button button--secondary button--lg" to="/docs/usage/introduction" style={{ flex: 1, minWidth: '200px', maxWidth: '250px' }}>
@@ -37,7 +37,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`Home`}
-      description="Get started with configuring your self-encrypting drives">
+      description="An easy to use application to enable your TCG (Opal & more) self-encrypting drives. Supports pre-boot authentication and many TCG standards.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

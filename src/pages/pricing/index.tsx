@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 
 export default function Pricing() {
     return (
-        <Layout title={`Downloads`} description="Download precompiled executables and PBA images">
+        <Layout title={`Pricing`} description="SEDManager is free for non-commercial use. Learn more about pricing and terms and conditions here.">
             <main style={{ maxWidth: '960px', margin: '0 auto' }}>
                 <h1>Pricing</h1>
 
