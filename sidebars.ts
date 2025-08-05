@@ -28,6 +28,7 @@ const sidebars: SidebarsConfig = {
       ],
     },
     'usage/troubleshooting',
+    'usage/tool_compat',
   ]
 };
 

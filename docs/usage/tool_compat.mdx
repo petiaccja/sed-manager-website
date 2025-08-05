@@ -1,0 +1,32 @@
+# Compatibility with other SED software
+
+In general, the device and all tools (including SEDManager) used to manage it adhere to the same TCG specification. This means that, in theory, a device can be set up with one tool, and another tool will be able to later read and modify its configuration without issues. In practice, however, things rarely go as smoothly.
+
+## Potential issues
+
+### Partially supported configuration options
+
+Not all SED management tools support all configuration options that the device exposes. For example, some NVMe devices support multiple namespaces with multiple locking ranges. This mode of operation is not currently supported by SEDManager, but you may still configure your drive for it with another tool. If you attempt to reconfigure such a drive with SEDManager, it will display the locking ranges as they are, but it won't display the namespace they belong to and you may get unexpected failures when trying to modify parameters.
+
+### Tool-specific features
+
+While most configuration options are standardized, and all tools have to do it the same way, there is possibility to add extra features that only make sense to the tool that implemented them. For example, devices expose a feature to store arbitrary data securely on the device. A drive management tool can use this arbitrary data storage to write some metadata that only makes sense to that particular tool. In particular, this feature of the devices can be used to implement multi-drive unlocking, by securely storing passwords on the primary drive that can be used to unlock secondary drives.
+
+### Password handling
+
+#### Character encoding
+
+When sending a password to the device, the password's characters need to be converted to plain bytes. Depending on the encoding used by the SED management tool, the latin character `A` may be represented by different bytes. In UTF-8, it would appear as a single byte of `[0x41]`, however, if encoded as UTF-32-LE, it would appear as four bytes: `[0x41, 0x00, 0x00, 0x00]`. Clearly, one must use the same character encoding, or else entering the same password won't be accepted by the device. 
+
+**SEDManager uses UTF-8 encoding**. The advantage of UTF-8 is that it supports all character sets, and generally encodes passwords in the fewest bytes, so it works well when the device limits the length of the passwords.
+
+#### Password hashing and salting
+
+In web applications, passwords are stored by the web server. When the user enters their password in the web browser, it is sent to the server and compared against the stored password to check if the user entered the correct password. In case the password database of the server gets stolen, the hackers can authenticate as any user with the passwords in the database. To avoid this, servers must hash passwords. In case hackers steal the hashed passwords, it is difficult for them to guess from the hash what the original password was, therefore they still cannot authenticate. Salting makes it even more difficult to guess the original password. Hashing on the client side (e.g. in the web browser) and sending the hashed password to the server is not very useful, and server-side hashing is still a must.
+
+In case of self-encrypting drives, the management tool is the client, and the drive is the server. Consequently, the drive must do its own password hashing and salting to safely store the passwords. Hashing done by the management tool is ineffective, as it just essentially means the hashed password becomes the actual password. For this reason, **SEDManager does not employ any password hashing**, but other tools might.
+
+## Compatibility with [SEDutil](https://github.com/Drive-Trust-Alliance/sedutil)
+
+Known issues:
+- **Password hashing**: By default, SEDutil employs password hashing while SEDManager doesn't. SEDutil has the option to drop password hashing, which must be used for interoperability, as SEDManager doesn't have the option to follow SEDutil's password hashing scheme. Learn more and share your opinion in the related [issue](https://github.com/petiaccja/sed-manager-rs/issues/24).

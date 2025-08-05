@@ -38,14 +38,18 @@ Currently, this is the only page where you can change passwords. Support is plan
 
 ## Name and password limitations
 
-### Maximum 32 characters
+### Character encoding
 
-Names and passwords must be no more than 32 characters, a limitation imposed by the TCG specifications. Entering a longer password will result in an error message. Non-English characters may account for up to 4 characters.
+SEDManager uses [UTF-8](https://en.wikipedia.org/wiki/UTF-8) to encode both names and passwords. The encoding supports essentially all characters and writing systems, and is invisible to you. It's important to note that some characters (e.g. Japanese or Chinese script) take more space when encoded, which matters for the length limit on names and passwords.
 
-### Alphabets
+### Length limit
 
-It's up to the device to support non-Latin characters. In case the value you entered is not supported, you will receive an error message. While SEDManager fully supports non-Latin characters, the PBA environment uses the US-English keyboard layout, so you may have trouble entering such passwords and usernames in the PBA.
+Devices support only up to 32 bytes for both names and passwords. For latin script, this means up to 32 characters, however, for other scripts whose characters are encoded as multiple bytes, the limit may be reduced down to 8 characters.
 
-### Characters are encoded as UTF-8
+### Character set limitations
 
-SEDManager uses UTF-8 to encode both names and passwords. This may be important information if you intend to use other tools alongside SEDManager, and your usernames and passwords contain non-ASCII characters.
+The self-encrypting drives are not required to support arbitrary characters, so while unexpected, it's possible that they only support latin script. In this case, you will get an error while trying to set user names or passwords.
+
+### Locale
+
+Currently, the PBA environment uses the en-US locale and keyboard layout when entering your password. This may lead to problems entering your password in the PBA environment even when there were no issues in the configuration UI.
