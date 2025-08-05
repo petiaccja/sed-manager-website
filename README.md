@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository contains the code and text for SEDManager's website, where the documentation and other information is hosted. The website was made using [Docusaurus](https://docusaurus.io/). See Docusaurus's documentation on how to build.
+This repository contains the code and text for SEDManager's website, where the documentation and other information is hosted. The website was made using [Docusaurus](https://docusaurus.io/). See Docusaurus' documentation on how to build.
 
 ## License
 
