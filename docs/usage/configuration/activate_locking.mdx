@@ -4,16 +4,22 @@ description: Activate the locking features on TCG Opal & related devices. Lockin
 
 # Activating locking
 
-## What does activation do?
+By default, the locking features of your drive are disabled. (The drive is still encrypting your data, but the encryption keys are accessible to anyone, and the data is automatically decrypted when you read it.) When you enable [locking](/docs/theory/the_tcg_spec#locking-and-encryption-features), the device opens up the options to configure users and passwords that limit access to the encrypted data.
 
-Activating locking enables the [Locking SP](/docs/theory/the_tcg_spec#locking-and-encryption-features), which makes the locking and encryption features of the device available. This is also a single step process, and you will need the owner's password you have just set, as well as provide a new password for the administrator authority that will manage locking and encryption features from now on.
+When locking is enabled, you can:
+- Set up locking ranges
+- Enable/disable users and set their passwords
+- Give users permissions to access the contents of locking ranges
+- Configure MBR shadowing and pre-boot authentication
 
-## The Admin1 password
+## The Admin1 authority
 
-SEDManager gives you the option to reuse your owner's password as the locking admin password. You can use this option for simplicity in case you're the only user of the drive or you will be the only one managing the device's configuration. There is very little safety concern in reusing the password, and you can change both password independently afterwards.
+When you activate locking, SEDManager asks you to provide a password for the *Admin1* authority. When you later configure the aforementioned features, such as locking ranges, you will have to authenticate as the special Admin1 user.
 
-:::warning Drive is erased on revert
+In case you're the only person using the drive, you can safely reuse the owner password. Make sure you don't lose the Admin1 password though, as that means you can no longer configure the locking features of the drive. Remember that with the owner password, you can always revert the device to factory settings and start over. Just like any password, you can change the Admin1 password at any time too.
 
-Enabling locking will not erase your data, but later disabling it will. While you can just leave locking on, it's not recommended unless you are using it, so make sure you really want to enable locking or prepare to back your data up when you disable it.
+:::warning Reverting the drive erases all your data
+
+If you resort to reverting your drive either because you lost your Admin1 password, or you changed your mind about activating locking, be aware that it will erase all of your data. If you don't intend to use locking features, it's best to leave locking inactive.
 
 :::

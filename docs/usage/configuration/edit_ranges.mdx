@@ -4,35 +4,40 @@ description: Define the locking ranges that control which sections of the drives
 
 # Editing locking ranges
 
-:::warning Edit non-empty drives carefully
+:::warning Assigning a sector to a different locking range erases it
 
-Reassigning a region of the drive to a new locking range will erase the contents of that region. Take extra care when editing drives already in use, and always back up your data!
-
-:::
-
-## Locking range parameters
-
-Locking ranges are described [here](/docs/theory/the_tcg_spec#locking-ranges). In addition to the start and the length of the locking range, SEDManager also display the end of the locking range. The end LBA itself is not included in the range. You can freely change either the start, the length, or the end, the three values are kept consistent. Sometimes you will notice that SEDManager adjusts the values you type in. This is because some drives require alignment of the locking ranges and SEDManager adheres to that.
-
-## Erasing ranges
-
-You can cryptographically erase a locking range by clicking the erase button on the range's row. This deletes the current media encryption key (MEK) and replaces it with a new one, permanently erasing all data associated with the locking range. The data cannot be recovered in any way, ever, so be careful with this function.
-
-:::tip Avoid predictable keys
-
-When you first configure the drive, erase the global range once. Manufacturers sometimes use predictable algorithms to generate the default key in the factory, but the device should generate secure completely random keys, reducing the chance of someone guessing the encryption key to your data.
+When you change which locking range a sector of your drive is assigned to, that sector's content will be erased. Because of this, you have to be extremely careful when editing locking ranges on a drive that already has data on it.
 
 :::
 
-## Potential errors
+You can change the following parameters of [locking ranges](/docs/theory/the_tcg_spec#locking-ranges):
+- **Start**: the first LBA sector of the locking range
+- **Length**: the number of LBA sectors in the locking range
+- **End**: the last LBA sector of the locking range, which is itself not included in the range
+- **Read lock enabled**: read access to the range will be blocked after power cycling the drive
+- **Write lock enabled**: write access to the range will be blocked after power cycling the drive
+- **Read locked**: read access to the range is currently blocked
+- **Write locked**: write access to the range is currently blocked
 
-### Overlapping ranges
+Additionally, you can also **erase** the contents of the locking range. Erasure is instantanious as its implemented by crypto shredding.
 
-Locking ranges (except for the global range) are not allowed to overlap. If you try to set overlapping ranges, the device will give you an *invalid parameter* error. In case you're changing multiple ranges at once, a helpful trick is to first set the length of all ranges to zero, as zero-length ranges will never overlap.
+:::tip Manufacturers may set predictable keys
 
-### Erasing ranges when encryption is not supported
+There have been a several instances of manufacturers of various devices (WiFi routers, self-encrypting drives, etc.) setting predictable passwords in the factory that attackers could guess. To avoid this, you can generate new encryption keys by erasing locking ranges just before you configure your drive.
 
-On some TCG Pyrite drives, encryption is not supported. In this case, erasing any range will fail, as the encryption key that would be replaced doesn't exist in the first place.
+:::
+
+## Alignment
+
+Some drives require you to align the locking ranges to certain multiples of sectors. For example, if the alignment requirement is 8 sectors, a locking range starting at the 0th, 8th, or 16th LBA is correct, but a range starting at the 13th LBA will not be accepted by the device. SEDManager will automatically adjust alignment for you by rounding it down to the closest alignment boundary.
+
+## Overlapping ranges
+
+Except for the global range, ranges are not allowed to overlap. If you attempt to set overlapping ranges, the device will give you an *invalid parameter* error. In case you're changing multiple ranges at once, a helpful trick is to first set the length of all ranges to zero, as zero-length ranges will never overlap.
+
+## Drives that don't support encryption
+
+Locking ranges are still present on drives that don't support encryption. These drives will prevent access to the range's LBA sectors all the same, but this is merely a firmware protection, the data within the chips is still not encrypted. On such drives, the erase operation will fail as cryptographic erase is not possible. This currently only affects TCG Pyrite drives.
 
 ## How should I configure locking ranges?
 

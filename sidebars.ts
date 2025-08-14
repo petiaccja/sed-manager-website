@@ -20,6 +20,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'usage/configuration/take_ownership',
         'usage/configuration/activate_locking',
+        'usage/configuration/change_password',
         'usage/configuration/edit_ranges',
         'usage/configuration/edit_users',
         'usage/configuration/edit_permissions',
