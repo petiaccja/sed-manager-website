@@ -6,22 +6,23 @@ description: Set a master password for the owner to oversee the provisioning of 
 
 ## Setting the owner's password
 
-The [owner authority](/docs/theory/the_tcg_spec#the-opal-opalite-pyrite-and-ruby-sscs) comes with a factory-configured default password. Taking ownership of the device is a single step to change the owner's password to something only you know.
+The [owner authority](/docs/theory/the_tcg_spec#the-opal-opalite-pyrite-and-ruby-sscs) comes with a factory-configured default password. In order to prevent others from modifying the device's configuration, that password needs to be changed, which is what we mean by *taking ownership*.
 
-The owner has the authority to:
-- Enable and disable the locking features
-- Revert the device to factory defaults
+As the owner of the drive, you, and only you, can:
+- Activate the locking features of the drive
+- Revert the locking features to factory defaults and erase all data in the meantime
+- Revert the entire device to factory defaults
 
-While it's not possible to access encrypted data even if you have the owner's password, changing it ensures that people don't tamper with the device.
+While encrypted data is not accessible even for the owner, other people won't be able to perform any of the above.
 
-:::info PSID revert & lost password
+:::info Reverting the device when you lost your password
 
-Should you lose your owner's password, you can still revert the device using the *PSID password*, which you typically find printed onto the device's label or inside a booklet that came in the package.
+Aside from the owner, there is the so-called *physical owner*, whose password is typically printed on the device under the *PSID* label. With the physical owner's password, you can factory reset your device even when you locked yourself out as the owner.
 
 :::
 
-:::warning Losing all passwords = bricked device
+:::warning You may brick your device if you lose your passwords
 
-If you lose both your owner's password and your PSID password, there is no way to revert your drive and set a new owner's password, though you can still access your data. If you also lose your encryption password, your device becomes unusable and you have to buy a new one.
+Losing access both the owner and physical owner password means you don't have any way to factory reset the device. While you can still use the drive if you have your passwords to access the data, losing that as well means your drive is unusable and you need to buy a new one.
 
 :::

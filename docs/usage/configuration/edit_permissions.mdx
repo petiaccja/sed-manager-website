@@ -4,21 +4,17 @@ description: Assign fine-grained permissions to the device's users so that they 
 
 # Editing permissions
 
-## Permissions you can set
+You can give each user a permission for the following actions:
 
 - **Unshadow MBR**: When checked, the user can [unshadow the MBR](/docs/theory/the_tcg_spec#mbr-shadowing), revealing the (still encrypted) contents of the drive.
 - **Read unlock a range**: The selected user can disable read protection on the locking range, making its contents readable.
 - **Write unlock a range**: Disable write protection, making the locking range writable.
 
-## Users listed on the page
+## User groups
 
-### *Users* authority
+Amongst the users, you will see the *Users* user group as well. This is similar to the *Admins* user group, but it contains all the numbered *User#N* authorities. Giving a persmission to the *Users* group means that all users will have that permission.
 
-The *Users* authority is a group that includes all users. Giving permission to the *Users* authority means every *User* has that permission too.
-
-### Admins
-
-Admin always have all the permissions, so there is nothing you can configure on them. Consequently, they are not shown on the permissions page.
+The *Admin#N* users and the *Admins* group are missing, because they have all the permissions, so there is nothing to configure.
 
 ## How should I configure permissions?
 

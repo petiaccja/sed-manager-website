@@ -4,11 +4,11 @@ description: Enable support for pre-boot authentication (PBA) via MBR shadowing,
 
 # MBR shadowing
 
-## The shadowing feature
+## Enabling the shadowing feature
 
-[MBR shadowing](/docs/theory/the_tcg_spec#mbr-shadowing) is disabled by default, even if the device supports it. If shadowing is enabled, power cycling the device will make it show the shadow MBR instead of the actual disk.
+If the device supports [MBR shadowing](/docs/theory/the_tcg_spec#mbr-shadowing), which is disabled by default, you can enable it here. Once enabled, the device will show the shadow MBR instead of the actual disk after every power cycle.
 
-## Current shadowing state
+## Shadowing state
 
 You can manually switch between showing the shadow MBR or showing the disk contents. This setting is useful for testing, but, normally, you will only change the shadowing state from the PBA.
 
@@ -16,10 +16,10 @@ You can manually switch between showing the shadow MBR or showing the disk conte
 
 Uploading a PBA image onto the shadow MBR will make it possible to unlock the drive before booting the operating system. The PBA is a small bootable application that asks you for your password, authenticates to the drive, unshadows the MBR, and unlocks authorized locking ranges. In order to use the PBA, enter your BIOS or UEFI settings while the device is locked, and set the PBA as the first boot option.
 
-You don't have to use [SEDManager's PBA](https://github.com/petiaccja/sed-manager-pba/releases), SEDManager will happily upload any other PBA environment or even a cat picture. Make sure the PBA's password processing is compatible with SEDManager.
+You don't have to use [SEDManager's PBA](https://github.com/petiaccja/sed-manager-pba/releases), SEDManager will happily upload any other PBA environment or even a cat picture. To learn more, you can read the chapter on [compatibility with other SED tools](/docs/usage/tool_compat).
 
 :::note The open file button does not always work
 
-Linux has always been famous for how user-friendly it is. Unfortunately, when running as root, the file open dialog sometimes just doesn't work, and there is not much I can do about it. You can use the good old copy paste method to specify a path.
+When running as root on Linux, the file open dialog may not work in some cases. This is because the desktop environment's configuration is often broken for the root user. Unfortunately, there is not much I can do about this, so you will need to type or copy-paste the path to the PBA image.
 
 :::
